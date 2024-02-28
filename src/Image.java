@@ -1,10 +1,28 @@
-public class Image {
+public abstract class Image {
     public String directory = null;
     public MagicNumber magicNumber = null;
+    public int[][] imageSize;
+    public String[] imageComments;
 
-    public Image(String directory){
+    public Image(String directory, MagicNumber magicNumber){
         this.directory = directory;
-        //TODO: add code that checks the magic number (magic number is the text on the first row of the image file which represents its type)
+        this.magicNumber = magicNumber;
+        this.imageSize = imageSize(directory);
     }
+
+    public int[][] imageSize(String directory){
+        int x = 0;
+        int y = 0;
+
+        //TODO: Add logic for getting the image size(TIP - first row is 'magic number' and
+        // then every row that starts with '#' is a comment and should be skipped and maybe
+        // saved somewhere so they can be rewritten back into the image file)
+
+        return new int[x][y];
+    }
+
+    //TODO: Add functionality to change the type of the image(either add it as a general
+    // function of the program or just so it makes collages with different image types easier)
+
 
 }

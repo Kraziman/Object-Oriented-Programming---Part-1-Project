@@ -1,9 +1,14 @@
 import java.util.Scanner;
+import java.util.Stack;
+
 public class ImageEditor {
     private static boolean exitRequested = false;
     private static Command userCommand = null;
     private static String[] userCommandParameters = null;
 
+    /*Purpose of this Stack is to save all the changes of a given image and
+    have the ability to undo(Maybe put it in the Session class instead of here)*/
+    private Stack<Image[]> imageChanges;
 
     public ImageEditor(){
         Scanner scanner = new Scanner(System.in);
