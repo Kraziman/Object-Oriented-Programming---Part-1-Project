@@ -1,3 +1,5 @@
 public enum MagicNumber {
-    PPM, PGM, PBM
+    PPM,
+    PGM,
+    PBM
 }

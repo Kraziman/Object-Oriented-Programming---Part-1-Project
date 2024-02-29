@@ -22,7 +22,22 @@ public abstract class Image {
     }
 
     //TODO: Add functionality to change the type of the image(either add it as a general
-    // function of the program or just so it makes collages with different image types easier)
+    // function of the program or just so it makes collages with different image types easi
 
+    public void rotate(Direction d){
+
+    }
+
+    public void negative(){
+
+    }
+
+    public void grayscale(){
+
+    }
+
+    public void monochrome(){
+
+    }
 
 }

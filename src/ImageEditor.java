@@ -15,11 +15,11 @@ public class ImageEditor {
 
         do{
             try{
-                System.out.print("Enter a command (or type 'exit' to exit): ");
-
                 if (exitRequested){
                     break;
                 }
+
+                System.out.print("Enter a command (or type 'exit' to exit): ");
 
                 userCommand = Command.valueOf(scanner.nextLine().toUpperCase());
                 executeCommand(userCommand);
@@ -27,7 +27,7 @@ public class ImageEditor {
             }
             catch (IllegalArgumentException e){
                 e.getStackTrace();
-                System.out.println("Unknown command");
+                System.out.println("Unknown command!");
                 userCommand = null;
             }
         } while (userCommand == null);
@@ -81,5 +81,17 @@ public class ImageEditor {
         }
 
         userCommand = null;
+    }
+
+    public void switchSession(){
+
+    }
+
+    public void sessionInfo(){
+
+    }
+
+    public void collage(){
+
     }
 }
