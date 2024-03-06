@@ -5,10 +5,14 @@ public class ImageEditor {
     private static boolean exitRequested = false;
     private static Command userCommand = null;
     private static String[] userCommandParameters = null;
+    int numberOfParameters = 0;
+    private static String input;
+    private static String[] inputArray;
+
 
     /*Purpose of this Stack is to save all the changes of a given image and
     have the ability to undo(Maybe put it in the Session class instead of here)*/
-    private Stack<Image[]> imageChanges;
+    private Stack<Image[]> imageChanges; //TODO: maybe temp, maybe make your own stack or use list
 
     public ImageEditor(){
         Scanner scanner = new Scanner(System.in);
@@ -21,9 +25,11 @@ public class ImageEditor {
 
                 System.out.print("Enter a command (or type 'exit' to exit): ");
 
-                userCommand = Command.valueOf(scanner.nextLine().toUpperCase());
-                executeCommand(userCommand);
+                input = scanner.nextLine();
+                inputArray = input.split("\\s+", 2);
 
+                userCommand = Command.valueOf(inputArray[0]);
+                executeCommand(userCommand);
             }
             catch (IllegalArgumentException e){
                 e.getStackTrace();
@@ -33,17 +39,31 @@ public class ImageEditor {
         } while (userCommand == null);
     };
 
-    private static void executeCommand(Command c){
+    private void executeCommand(Command c) {
 
         switch(c){
             case ADD:
+                String imageType;
+                try {
+                    this.numberOfParameters = 1;
+                    userCommandParameters = inputArray[1].split("\\s+", numberOfParameters);
+                    imageType = Image.checkImageType(userCommandParameters[0]);
+                    System.out.println(imageType);
+                }
+                catch (InvalidPathException e){
+                    System.out.println(e.getMessage());
+                }
+
                 //TODO: Add code for this command
                 break;
             case EXIT:
+                exitRequested = true;
+
                 //TODO: Add code for this command
                 break;
             case HELP:
-                //TODO: Add code for this command
+                commandList();
+                //TODO: Add code for this command make it so it can have 0 or 1 parameters jf a person wants a help with a specific command
                 break;
             case LOAD:
                 //TODO: Add code for this command
@@ -93,5 +113,9 @@ public class ImageEditor {
 
     public void collage(){
 
+    }
+
+    public void commandList(){
+        System.out.println("\nList of commands:");
     }
 }

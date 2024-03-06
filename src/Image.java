@@ -1,8 +1,12 @@
+
+
 public abstract class Image {
     public String directory = null;
     public MagicNumber magicNumber = null;
     public int[][] imageSize;
     public String[] imageComments;
+
+    public Image imageHistory;
 
     public Image(String directory, MagicNumber magicNumber){
         this.directory = directory;
@@ -38,6 +42,35 @@ public abstract class Image {
 
     public void monochrome(){
 
+    }
+
+    public static String checkImageType(String imagePath) throws InvalidPathException {
+
+        String imageExtension;
+
+        int SlashIndex1 = imagePath.lastIndexOf("/");
+        int SlashIndex2 = imagePath.lastIndexOf("\\");
+        int lastSlashIndex = Math.max(SlashIndex1,SlashIndex2);
+        int dotIndex;
+        String temp;
+
+        if (lastSlashIndex != -1){
+            temp = imagePath.substring(lastSlashIndex);
+            dotIndex = temp.lastIndexOf(".");
+            if (dotIndex != -1 && dotIndex < imagePath.length() ){
+                return imageExtension = temp.substring(dotIndex + 1);
+            }
+            else{
+                throw new InvalidPathException("Invalid path: " + imagePath);
+            }
+        }
+        else {
+            throw new InvalidPathException("Invalid path: " + imagePath);
+        }
+
+
+        /*String imageName = new File(imagePath).getName();
+        return imageName.substring(imageName.indexOf('.') + 1);*/
     }
 
 }
