@@ -2,21 +2,25 @@ import java.util.ArrayList;
 
 public class Session {
     private int sessionID;
-    private ArrayList<Image> Images;
+    private ArrayList<Image> images;
 
-    //TODO: finish the constructor
     public Session() {
+        //TODO: finish the constructor
     }
 
-    public void UNDO(){
+    public void add(Image image){
+        images.add(image);
+    }
+
+    public void undo(){
 
     }
 
-    public void REDO(){
+    public void redo(){
 
     }
 
-    public void ADD(){
+    public void sessionInfo(){
 
     }
 }

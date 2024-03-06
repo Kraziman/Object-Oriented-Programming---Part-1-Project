@@ -1,16 +1,16 @@
 public enum Command {
     LOAD,
-    CLOSE,
     SAVE,
-    SAVEAS,
     GRAYSCALE,
     MONOCHROME,
     NEGATIVE,
     UNDO,
+    REDO,
     ADD,
-    SESSION,
+    SESSIONINFO,
     SWITCH,
     COLLAGE,
     HELP,
-    EXIT
+    EXIT,
+    ROTATE
 }

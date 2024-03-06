@@ -1,3 +1,4 @@
+import java.util.Map;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -14,12 +15,12 @@ public class ImageEditor {
     have the ability to undo(Maybe put it in the Session class instead of here)*/
     private Stack<Image[]> imageChanges; //TODO: maybe temp, maybe make your own stack or use list
 
-    public ImageEditor(){
+    public ImageEditor() {
         Scanner scanner = new Scanner(System.in);
 
-        do{
-            try{
-                if (exitRequested){
+        do {
+            try {
+                if (exitRequested) {
                     break;
                 }
 
@@ -30,18 +31,20 @@ public class ImageEditor {
 
                 userCommand = Command.valueOf(inputArray[0]);
                 executeCommand(userCommand);
-            }
-            catch (IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
                 e.getStackTrace();
                 System.out.println("Unknown command!");
                 userCommand = null;
             }
         } while (userCommand == null);
-    };
+    }
+
+    ;
 
     private void executeCommand(Command c) {
+        Map<String, Command>
 
-        switch(c){
+        /*switch(c){
             case ADD:
                 String imageType;
                 try {
@@ -98,24 +101,33 @@ public class ImageEditor {
             case MONOCHROME:
                 //TODO: Add code for this command
                 break;
-        }
+        }*/
 
-        userCommand = null;
+                userCommand = null;
     }
 
-    public void switchSession(){
-
-    }
-
-    public void sessionInfo(){
+    public void load() {
 
     }
 
-    public void collage(){
+    public void save() {
 
     }
 
-    public void commandList(){
-        System.out.println("\nList of commands:");
+    public void switchSession() {
+
     }
+
+    public void collage() {
+
+    }
+
+    public void help() {
+
+    }
+
+    public void exit() {
+
+    }
+
 }
