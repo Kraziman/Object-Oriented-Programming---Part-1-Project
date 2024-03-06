@@ -9,6 +9,8 @@ public class ImageEditor {
     int numberOfParameters = 0;
     private static String input;
     private static String[] inputArray;
+    private static Session currentSession;
+    private static Image currentImage;
 
 
     /*Purpose of this Stack is to save all the changes of a given image and
@@ -18,6 +20,7 @@ public class ImageEditor {
     public ImageEditor() {
         Scanner scanner = new Scanner(System.in);
 
+        //TODO: When adding the image and the session is null a new session needs to be created.
         do {
             try {
                 if (exitRequested) {
@@ -30,13 +33,29 @@ public class ImageEditor {
                 inputArray = input.split("\\s+", 2);
 
                 userCommand = Command.valueOf(inputArray[0]);
-                executeCommand(userCommand);
+                CommandHandler.getHandle().get(userCommand).run();
             } catch (IllegalArgumentException e) {
                 e.getStackTrace();
                 System.out.println("Unknown command!");
-                userCommand = null;
             }
-        } while (userCommand == null);
+            userCommand = null;
+        } while (true);
+    }
+
+    public static String[] getUserCommandParameters() {
+        return userCommandParameters;
+    }
+
+    public static void setUserCommandParameters(String[] userCommandParameters) {
+        ImageEditor.userCommandParameters = userCommandParameters;
+    }
+
+    public static String[] getInputArray() {
+        return inputArray;
+    }
+
+    public static void setInputArray(String[] inputArray) {
+        ImageEditor.inputArray = inputArray;
     }
 
     ;

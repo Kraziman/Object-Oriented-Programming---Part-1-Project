@@ -2,15 +2,13 @@
 
 public abstract class Image {
     public String directory = null;
-    public MagicNumber magicNumber = null;
     public int[][] imageSize;
     public String[] imageComments;
 
     public Image imageHistory;
 
-    public Image(String directory, MagicNumber magicNumber){
+    public Image(String directory){
         this.directory = directory;
-        this.magicNumber = magicNumber;
         this.imageSize = imageSize(directory);
     }
 
@@ -25,11 +23,15 @@ public abstract class Image {
         return new int[x][y];
     }
 
+    public ImageType getImageType(){
+        return null;
+    }
+
     //TODO: Add functionality to change the type of the image(either add it as a general
-    // function of the program or just so it makes collages with different image types easi
+    // function of the program or just so it makes collages with different image types easier to make
 
-    public void rotate(Direction d){
-
+    public void rotate(){
+        //TODO: make it so it gets its direction directly from the ImageEditor's parameters
     }
 
     public void negative(){
@@ -61,11 +63,11 @@ public abstract class Image {
                 return imageExtension = temp.substring(dotIndex + 1);
             }
             else{
-                throw new InvalidPathException("Invalid path: " + imagePath);
+                throw new InvalidPathException("Invalid path: " + imagePath + ", or file does not exist.");
             }
         }
         else {
-            throw new InvalidPathException("Invalid path: " + imagePath);
+            throw new InvalidPathException("Invalid path: " + imagePath + ", or file does not exist.");
         }
 
 

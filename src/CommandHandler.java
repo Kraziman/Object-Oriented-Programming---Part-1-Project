@@ -2,32 +2,34 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CommandHandler {
-    private  Map<Command, Runnable> commands = new HashMap<>();
-    private Session session;
-    private Image image;
-    private ImageEditor imageEditor;
-    private Direction direction;
+    private static final Map<Command, Runnable> handle = new HashMap<>();
+    private static Session session;
+    private static Image image;
+    private static ImageEditor imageEditor;
 
-    public CommandHandler(){
+    static{
         //TODO: Add parameters to the methods
-        commands.put(Command.ADD, () -> session.add(image));
-        commands.put(Command.UNDO, () -> session.undo());
-        commands.put(Command.REDO, () -> session.redo());
-        commands.put(Command.SESSIONINFO, () -> session.sessionInfo());
+        //TODO: Instead of using these variables use directly the static values from ImageEditor
+        handle.put(Command.ADD, () -> session.add(image));
+        handle.put(Command.UNDO, () -> session.undo());
+        handle.put(Command.REDO, () -> session.redo());
+        handle.put(Command.SESSIONINFO, () -> session.sessionInfo());
 
-        commands.put(Command.LOAD, () -> imageEditor.load());
-        commands.put(Command.SAVE, () -> imageEditor.save());
-        commands.put(Command.SWITCH, () -> imageEditor.switchSession());
-        commands.put(Command.COLLAGE, () -> imageEditor.collage());
-        commands.put(Command.HELP, () -> imageEditor.help());
-        commands.put(Command.EXIT, () -> imageEditor.exit());
+        handle.put(Command.LOAD, () -> imageEditor.load());
+        handle.put(Command.SAVE, () -> imageEditor.save());
+        handle.put(Command.SWITCH, () -> imageEditor.switchSession());
+        handle.put(Command.COLLAGE, () -> imageEditor.collage());
+        handle.put(Command.HELP, () -> imageEditor.help());
+        handle.put(Command.EXIT, () -> imageEditor.exit());
 
-        commands.put(Command.ROTATE, () -> image.rotate(direction));
-        commands.put(Command.NEGATIVE, () -> image.negative());
-        commands.put(Command.GRAYSCALE, () -> image.grayscale());
-        commands.put(Command.MONOCHROME, () -> image.monochrome());
+        handle.put(Command.ROTATE, () -> image.rotate());
+        handle.put(Command.NEGATIVE, () -> image.negative());
+        handle.put(Command.GRAYSCALE, () -> image.grayscale());
+        handle.put(Command.MONOCHROME, () -> image.monochrome());
 
     }
 
-
+    public static Map<Command, Runnable> getHandle() {
+        return handle;
+    }
 }

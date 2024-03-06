@@ -1,4 +1,4 @@
-public enum MagicNumber {
+public enum ImageType {
     PPM,
     PGM,
     PBM

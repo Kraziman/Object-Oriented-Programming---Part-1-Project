@@ -1,6 +1,11 @@
 public class PPM extends Image{
 
-    public PPM(String directory, MagicNumber magicNumber) {
-        super(directory, magicNumber);
+    public PPM(String directory) {
+        super(directory);
+    }
+
+    @Override
+    public ImageType getImageType(){
+        return ImageType.PPM;
     }
 }
