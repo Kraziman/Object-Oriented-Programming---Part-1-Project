@@ -59,20 +59,19 @@ public abstract class Image {
         if (lastSlashIndex != -1){
             temp = imagePath.substring(lastSlashIndex);
             dotIndex = temp.lastIndexOf(".");
-            if (dotIndex != -1 && dotIndex < imagePath.length() ){
-                return imageExtension = temp.substring(dotIndex + 1);
-            }
-            else{
-                throw new InvalidPathException("Invalid path: " + imagePath + ", or file does not exist.");
-            }
         }
-        else {
-            throw new InvalidPathException("Invalid path: " + imagePath + ", or file does not exist.");
+        else{
+            temp = imagePath;
+            dotIndex = temp.lastIndexOf(".");
         }
 
+        if (dotIndex != -1 && dotIndex < imagePath.length() ){
+            return imageExtension = temp.substring(dotIndex + 1).toUpperCase();
+        }
+        else{
+            throw new InvalidPathException("Invalid path: \"" + imagePath + "\", or file does not exist.");
+        }
 
-        /*String imageName = new File(imagePath).getName();
-        return imageName.substring(imageName.indexOf('.') + 1);*/
     }
 
 }

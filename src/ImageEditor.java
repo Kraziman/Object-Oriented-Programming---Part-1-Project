@@ -12,11 +12,6 @@ public class ImageEditor {
     private static Session currentSession;
     private static Image currentImage;
 
-
-    /*Purpose of this Stack is to save all the changes of a given image and
-    have the ability to undo(Maybe put it in the Session class instead of here)*/
-    private Stack<Image[]> imageChanges; //TODO: maybe temp, maybe make your own stack or use list
-
     public ImageEditor() {
         Scanner scanner = new Scanner(System.in);
 
@@ -32,13 +27,15 @@ public class ImageEditor {
                 input = scanner.nextLine();
                 inputArray = input.split("\\s+", 2);
 
-                userCommand = Command.valueOf(inputArray[0]);
-                CommandHandler.getHandle().get(userCommand).run();
+                userCommand = Command.valueOf(inputArray[0].toUpperCase());
+                userCommand.handle();
+
             } catch (IllegalArgumentException e) {
                 e.getStackTrace();
                 System.out.println("Unknown command!");
             }
             userCommand = null;
+            inputArray = null;
         } while (true);
     }
 
@@ -56,9 +53,23 @@ public class ImageEditor {
 
     public static void setInputArray(String[] inputArray) {
         ImageEditor.inputArray = inputArray;
+    };
+
+    public static Session getCurrentSession() {
+        return currentSession;
     }
 
-    ;
+    public static void setCurrentSession(Session currentSession) {
+        ImageEditor.currentSession = currentSession;
+    }
+
+    public static Image getCurrentImage() {
+        return currentImage;
+    }
+
+    public static void setCurrentImage(Image currentImage) {
+        ImageEditor.currentImage = currentImage;
+    }
 
     private void executeCommand(Command c) {
         Map<String, Command>
@@ -124,6 +135,7 @@ public class ImageEditor {
 
                 userCommand = null;
     }
+
 
     public void load() {
 
