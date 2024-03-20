@@ -1,13 +1,17 @@
-
+import java.io.File;
+import java.util.ArrayList;
 
 public abstract class Image {
     public String directory = null;
     public int[][] imageSize;
-    public String[] imageComments;
-
+    public String magicNumber;
+    public ArrayList<String> imageComments;
+    public String imageDimensions;
+    public String RGBValue;
     public Image imageHistory;
+    public File file;
 
-    public Image(String directory){
+    public Image(String directory, String magicNumber, String RGBValue){
         this.directory = directory;
         this.imageSize = imageSize(directory);
     }
@@ -25,6 +29,10 @@ public abstract class Image {
 
     public ImageType getImageType(){
         return null;
+    }
+
+    public void readImageData(){
+
     }
 
     //TODO: Add functionality to change the type of the image(either add it as a general

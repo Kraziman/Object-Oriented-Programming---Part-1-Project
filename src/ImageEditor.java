@@ -18,9 +18,6 @@ public class ImageEditor {
         //TODO: When adding the image and the session is null a new session needs to be created.
         do {
             try {
-                if (exitRequested) {
-                    break;
-                }
 
                 System.out.print("Enter a command (or type 'exit' to exit): ");
 
@@ -36,7 +33,7 @@ public class ImageEditor {
             }
             userCommand = null;
             inputArray = null;
-        } while (true);
+        } while (!exitRequested);
     }
 
     public static String[] getUserCommandParameters() {
@@ -153,12 +150,19 @@ public class ImageEditor {
 
     }
 
-    public void help() {
-
+    public static void help() {
+        if (inputArray.length == 1){
+            //TODO: Add a list of all commands
+            System.out.println("List of all commands");
+        }
+        else {
+            userCommandParameters = inputArray[1].split("\\s+", 1);
+            System.out.println(Command.valueOf(userCommandParameters[0].toUpperCase()).help());
+        }
     }
 
-    public void exit() {
-
+    public static void exit() {
+        exitRequested = true;
     }
 
 }
