@@ -1,30 +1,21 @@
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public abstract class Image {
     public String directory = null;
-    public int[][] imageSize;
+    public ArrayList<String> imageData;
+    public int imageDataStart;
     public String magicNumber;
     public ArrayList<String> imageComments;
-    public String imageDimensions;
     public String RGBValue;
     public Image imageHistory;
     public File file;
 
     public Image(String directory, String magicNumber, String RGBValue){
         this.directory = directory;
-        this.imageSize = imageSize(directory);
-    }
-
-    public int[][] imageSize(String directory){
-        int x = 0;
-        int y = 0;
-
-        //TODO: Add logic for getting the image size(TIP - first row is 'magic number' and
-        // then every row that starts with '#' is a comment and should be skipped and maybe
-        // saved somewhere so they can be rewritten back into the image file)
-
-        return new int[x][y];
     }
 
     public ImageType getImageType(){
@@ -80,6 +71,19 @@ public abstract class Image {
             throw new InvalidPathException("Invalid path: \"" + imagePath + "\", or file does not exist.");
         }
 
+    }
+
+    public static ArrayList<String> imageReader(String directory){
+        ArrayList<String> imageData = new ArrayList<String>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(directory))){
+            String line;
+            while ((line = reader.readLine()) != null){
+                imageData.add(line);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return imageData;
     }
 
 }

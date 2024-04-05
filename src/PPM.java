@@ -1,3 +1,4 @@
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 
@@ -25,6 +26,17 @@ public class PPM extends Image{
 
     @Override
     public void readImageData(){
-        //TODO: add functionality
+        imageData = Image.imageReader(directory);
+        for (int i = 0; i < imageData.size(); i++){
+            if (imageData.get(i).contains("#")){
+                imageDataStart = i +1;
+            }
+        }
+        if (imageDataStart == 0){
+            //Start reading Image at imageDataStart+3
+        }
+        else {
+        //Start reading Image at imageDataStart+2
+        }
     }
 }
