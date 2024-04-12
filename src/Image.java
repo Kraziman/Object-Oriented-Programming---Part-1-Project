@@ -8,6 +8,7 @@ public abstract class Image {
     public String directory = null;
     public ArrayList<String> imageData;
     public int imageDataStart;
+    public ArrayList<String> imageRGBData;
     public String magicNumber;
     public ArrayList<String> imageComments;
     public String RGBValue;

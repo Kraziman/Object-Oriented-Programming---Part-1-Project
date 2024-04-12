@@ -54,7 +54,7 @@ public enum Command {
     NEGATIVE{
         @Override
         public void handle(){
-
+            ImageEditor.getCurrentImage().negative();
         }
 
         @Override

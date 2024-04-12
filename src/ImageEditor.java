@@ -1,6 +1,6 @@
+import java.io.File;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.Stack;
 
 public class ImageEditor {
     private static boolean exitRequested = false;
@@ -14,11 +14,11 @@ public class ImageEditor {
 
     public ImageEditor() {
         Scanner scanner = new Scanner(System.in);
+        new File("images").mkdir();
 
         //TODO: When adding the image and the session is null a new session needs to be created.
         do {
             try {
-
                 System.out.print("Enter a command (or type 'exit' to exit): ");
 
                 input = scanner.nextLine();

@@ -3,7 +3,7 @@ import java.util.Stack;
 
 public class Session {
     private int sessionID;
-    private static ArrayList<Image> images;
+    private ArrayList<Image> images;
     /*Purpose of this Stack is to save all the changes in the current session and
     have the ability to undo*/
     private Stack<Image[]> sessionChanges; //TODO: maybe temp, maybe make your own stack or use list
@@ -26,8 +26,8 @@ public class Session {
             // Set the image directory in userCommandParameters
             ImageEditor.setUserCommandParameters(ImageEditor.getInputArray()[1].split("\\s+", 1));
             imageType = ImageType.valueOf(Image.checkImageType(ImageEditor.getUserCommandParameters()[0]));
-            images.add(imageType.handle(ImageEditor.getUserCommandParameters()[0])); //TODO: Not sure if this works, needs testing
-
+            ImageEditor.setCurrentImage(imageType.handle(ImageEditor.getUserCommandParameters()[0]));
+            ImageEditor.getCurrentSession().getImages().add(ImageEditor.getCurrentImage());
         }
         catch (InvalidPathException e){
             System.out.println(e.getMessage());
@@ -49,4 +49,7 @@ public class Session {
 
     }
 
+    public ArrayList<Image> getImages() {
+        return images;
+    }
 }

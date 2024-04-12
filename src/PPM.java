@@ -1,11 +1,12 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
 
 public class PPM extends Image{
 
     public PPM(String directory) {
         super(directory, "P6", "255");
+        imageRGBData = new ArrayList<String>();
+        imageData = new ArrayList<String>();
         //TODO: Use Try catch block to check if image exists.(If IO.File reads
         // null the file does not exist and it should return exception, maybe a custom exception)
         try{
@@ -29,14 +30,36 @@ public class PPM extends Image{
         imageData = Image.imageReader(directory);
         for (int i = 0; i < imageData.size(); i++){
             if (imageData.get(i).contains("#")){
-                imageDataStart = i +1;
+                imageDataStart = i;
             }
         }
-        if (imageDataStart == 0){
-            //Start reading Image at imageDataStart+3
+        for (int i = imageDataStart+3; i < imageData.size(); i++){
+            imageRGBData.add(imageData.get(i));
         }
-        else {
-        //Start reading Image at imageDataStart+2
+    }
+
+    @Override
+    public void negative(){
+        for (int i = 0; i < imageRGBData.size(); i++){
+            String[] temp = new String[3];
+            temp = imageRGBData.get(i).split(" ");
+            for (int j = 0; j<temp.length; j++){
+                temp[j] = String.valueOf(255 - Integer.parseInt(temp[j]));
+            }
+            imageRGBData.set(i, temp[0] + " " + temp[1] + " " + temp[2] + " ");
         }
+        for (int i = imageDataStart+3; i< imageData.size(); i++){
+            imageData.set(i, imageRGBData.get(i-imageDataStart-3));
+        }
+        /*try (BufferedWriter writer = new BufferedWriter(new FileWriter("images/new_ppm.ppm"))){
+            //TODO: make the name of the new ppm file be "nameOfFile_NEW.ppm" and implement this in the save function
+            for (String tempData : imageData){
+                writer.write(tempData);
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.print("\tDONE!\n");*/
     }
 }
