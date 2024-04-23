@@ -1,3 +1,6 @@
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -13,10 +16,23 @@ public class Session {
         images = new ArrayList<>();
         //TODO: finish the constructor
         //TODO: Add ID generator
+        for (int i=0; true; i++){
+            if (!Files.exists(Path.of("Sessions/Session_" + i))){
+                sessionID = i;
+                break;
+            }
+        }
+        new File("Sessions/Session_" + sessionID + "/Images").mkdirs();
     }
 
+    public int getSessionID() {
+        return sessionID;
+    }
 
     public static void add(){
+        //TODO: ADD a check if a image with the same name exists, and change its name to name_1.extension.
+        //TODO: Fix a bug where object of a non-existent image is created and saved in the session.
+        //TODO: Make it so images are automatically saved in the Session's folder when added.
         ImageType imageType;
         try {
             if (ImageEditor.getCurrentSession() == null){
@@ -33,6 +49,7 @@ public class Session {
             System.out.println(e.getMessage());
         }
 
+        System.out.println("ADDED!");
         //TODO: Check if the image exists first, then finish the readImageData methods in the PBM/PGM/PPM classes
 
     }
@@ -48,6 +65,28 @@ public class Session {
     public void sessionInfo(){
 
     }
+
+    public void switchImage(){
+        //TODO: If the session has no images, or has only one image return appropriate message,
+        // first show a list of all the images in the session. Then ask
+        // which image would you like to switch to. Then switch to the image.
+        if (images != null){
+            int i = 1;
+            System.out.println("Select and image from the list:");
+            for (Image image : images){
+                System.out.print(i + ". " + image.fileName);
+                if (image.equals(ImageEditor.getCurrentImage())){
+                    System.out.print("\t\t<-Current Image");
+                }
+                System.out.print("\n");
+                i++;
+            }
+        }
+        else{
+            System.out.println("No Images in Session #" + sessionID);
+        }
+    }
+
 
     public ArrayList<Image> getImages() {
         return images;

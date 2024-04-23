@@ -5,18 +5,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public abstract class Image {
-    public String directory = null;
-    public ArrayList<String> imageData;
-    public int imageDataStart;
-    public ArrayList<String> imageRGBData;
-    public String magicNumber;
-    public ArrayList<String> imageComments;
-    public String RGBValue;
-    public Image imageHistory;
-    public File file;
+    protected String directory;
+    protected String fileName;
+    protected ArrayList<String> imageData;
+    protected int imageDataStart;
+    protected ArrayList<String> imageRGBData;
+    private String magicNumber;
+    protected int RGBValue;
+    protected File file;
+    protected int imageWidth;
+    protected int imageHeight;
 
-    public Image(String directory, String magicNumber, String RGBValue){
+    public Image(String directory, String magicNumber, int RGBValue){
         this.directory = directory;
+        this.fileName = checkImageName(directory);
     }
 
     public ImageType getImageType(){
@@ -30,8 +32,7 @@ public abstract class Image {
     //TODO: Add functionality to change the type of the image(either add it as a general
     // function of the program or just so it makes collages with different image types easier to make
 
-    public void rotate(){
-        //TODO: make it so it gets its direction directly from the ImageEditor's parameters
+    public void rotate(Direction d){
     }
 
     public void negative(){
@@ -48,25 +49,13 @@ public abstract class Image {
 
     public static String checkImageType(String imagePath) throws InvalidPathException {
 
-        String imageExtension;
 
-        int SlashIndex1 = imagePath.lastIndexOf("/");
-        int SlashIndex2 = imagePath.lastIndexOf("\\");
-        int lastSlashIndex = Math.max(SlashIndex1,SlashIndex2);
-        int dotIndex;
-        String temp;
+        String imageName = checkImageName(imagePath);
+        int dotIndex = imageName.lastIndexOf(".");
 
-        if (lastSlashIndex != -1){
-            temp = imagePath.substring(lastSlashIndex);
-            dotIndex = temp.lastIndexOf(".");
-        }
-        else{
-            temp = imagePath;
-            dotIndex = temp.lastIndexOf(".");
-        }
 
         if (dotIndex != -1 && dotIndex < imagePath.length() ){
-            return imageExtension = temp.substring(dotIndex + 1).toUpperCase();
+            return imageName.substring(dotIndex + 1).toUpperCase();
         }
         else{
             throw new InvalidPathException("Invalid path: \"" + imagePath + "\", or file does not exist.");
@@ -74,8 +63,25 @@ public abstract class Image {
 
     }
 
+    protected static String checkImageName(String imagePath){
+
+        int SlashIndex1 = imagePath.lastIndexOf("/");
+        int SlashIndex2 = imagePath.lastIndexOf("\\");
+        int lastSlashIndex = Math.max(SlashIndex1,SlashIndex2);
+        String imageName;
+
+        if (lastSlashIndex != -1){
+            imageName = imagePath.substring(lastSlashIndex+1);
+        }
+        else{
+            imageName = imagePath;
+        }
+
+        return imageName;
+    }
+
     public static ArrayList<String> imageReader(String directory){
-        ArrayList<String> imageData = new ArrayList<String>();
+        ArrayList<String> imageData = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(directory))){
             String line;
             while ((line = reader.readLine()) != null){

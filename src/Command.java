@@ -1,5 +1,3 @@
-import java.util.HashMap;
-import java.util.Map;
 
 public enum Command {
 
@@ -30,7 +28,7 @@ public enum Command {
     GRAYSCALE{
         @Override
         public void handle(){
-
+            ImageEditor.getCurrentImage().grayscale();
         }
 
         @Override
@@ -42,7 +40,7 @@ public enum Command {
     MONOCHROME{
         @Override
         public void handle(){
-
+            ImageEditor.getCurrentImage().monochrome();
         }
 
         @Override
@@ -111,10 +109,38 @@ public enum Command {
         }
 
     },
-    SWITCH{
+    NEWSESSION{
+        @Override
+        public void handle() {
+            ImageEditor.setCurrentSession(new Session());
+        }
+
+        @Override
+        public String help() {
+            return null;
+        }
+    },
+    SWITCHSESSION{
         @Override
         public void handle(){
 
+        }
+
+        @Override
+        public String help(){
+            return "Command Help Info";
+        }
+
+    },
+    SWITCHIMAGE{
+        @Override
+        public void handle(){
+            if (ImageEditor.getCurrentSession() != null){
+                ImageEditor.getCurrentSession().switchImage();
+            }
+            else {
+                System.out.println("You need to create/select a session first!");
+            }
         }
 
         @Override
@@ -162,7 +188,13 @@ public enum Command {
     ROTATE{
         @Override
         public void handle(){
-
+            if (ImageEditor.getInputArray().length <= 1){
+                throw new InvalidCommandFormat("Invalid command format! Try rotate <direction>");
+            }
+            else {
+                ImageEditor.setUserCommandParameters(ImageEditor.getInputArray()[1].split("\\s+", 1));
+                ImageEditor.getCurrentImage().rotate(Direction.valueOf(ImageEditor.getUserCommandParameters()[0].toUpperCase()));
+            }
         }
 
         @Override
@@ -171,6 +203,9 @@ public enum Command {
         }
 
     };
+
+
+
 
     public abstract void handle();
     public abstract String help();

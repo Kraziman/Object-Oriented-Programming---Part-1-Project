@@ -14,7 +14,6 @@ public class ImageEditor {
 
     public ImageEditor() {
         Scanner scanner = new Scanner(System.in);
-        new File("images").mkdir();
 
         //TODO: When adding the image and the session is null a new session needs to be created.
         do {
@@ -27,9 +26,13 @@ public class ImageEditor {
                 userCommand = Command.valueOf(inputArray[0].toUpperCase());
                 userCommand.handle();
 
-            } catch (IllegalArgumentException e) {
+            } catch (InvalidCommandFormat e) {
+                System.out.println(e.getMessage());
                 e.getStackTrace();
+
+            } catch (IllegalArgumentException e) {
                 System.out.println("Unknown command!");
+                e.getStackTrace();
             }
             userCommand = null;
             inputArray = null;
@@ -53,7 +56,12 @@ public class ImageEditor {
     };
 
     public static Session getCurrentSession() {
-        return currentSession;
+        if (currentSession != null){
+            return currentSession;
+        }
+        else {
+            return null;
+        }
     }
 
     public static void setCurrentSession(Session currentSession) {
@@ -66,71 +74,6 @@ public class ImageEditor {
 
     public static void setCurrentImage(Image currentImage) {
         ImageEditor.currentImage = currentImage;
-    }
-
-    private void executeCommand(Command c) {
-        Map<String, Command>
-
-        /*switch(c){
-            case ADD:
-                String imageType;
-                try {
-                    this.numberOfParameters = 1;
-                    userCommandParameters = inputArray[1].split("\\s+", numberOfParameters);
-                    imageType = Image.checkImageType(userCommandParameters[0]);
-                    System.out.println(imageType);
-                }
-                catch (InvalidPathException e){
-                    System.out.println(e.getMessage());
-                }
-
-                //TODO: Add code for this command
-                break;
-            case EXIT:
-                exitRequested = true;
-
-                //TODO: Add code for this command
-                break;
-            case HELP:
-                commandList();
-                //TODO: Add code for this command make it so it can have 0 or 1 parameters jf a person wants a help with a specific command
-                break;
-            case LOAD:
-                //TODO: Add code for this command
-                break;
-            case SAVE:
-                //TODO: Add code for this command
-                break;
-            case UNDO:
-                //TODO: Add code for this command
-                break;
-            case CLOSE:
-                //TODO: Add code for this command
-                break;
-            case SAVEAS:
-                //TODO: Add code for this command
-                break;
-            case SWITCH:
-                //TODO: Add code for this command
-                break;
-            case COLLAGE:
-                //TODO: Add code for this command
-                break;
-            case SESSION:
-                //TODO: Add code for this command
-                break;
-            case NEGATIVE:
-                //TODO: Add code for this command
-                break;
-            case GRAYSCALE:
-                //TODO: Add code for this command
-                break;
-            case MONOCHROME:
-                //TODO: Add code for this command
-                break;
-        }*/
-
-                userCommand = null;
     }
 
 
