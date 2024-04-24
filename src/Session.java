@@ -2,6 +2,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.Stack;
 
 public class Session {
@@ -71,16 +72,49 @@ public class Session {
         // first show a list of all the images in the session. Then ask
         // which image would you like to switch to. Then switch to the image.
         if (images != null){
-            int i = 1;
+            int currentNumber = 0;
+            int i;
+            int choice;
             System.out.println("Select and image from the list:");
-            for (Image image : images){
-                System.out.print(i + ". " + image.fileName);
-                if (image.equals(ImageEditor.getCurrentImage())){
-                    System.out.print("\t\t<-Current Image");
+
+
+            Scanner scanner = new Scanner(System.in);
+            do {
+                i = 1;
+                for (Image image : images){
+                    System.out.print(i + ". " + image.fileName);
+                    if (image.equals(ImageEditor.getCurrentImage())){
+                        System.out.print("\t\t<-Current Image");
+                        currentNumber = i-1;
+                    }
+                    System.out.print("\n");
+                    i++;
                 }
-                System.out.print("\n");
-                i++;
-            }
+
+                System.out.print("Please choose the number corresponding to the image you'd like to switch to: ");
+                choice = scanner.nextInt() - 1;
+
+                if (currentNumber == choice){
+                    System.out.print("\nYou selected the current image. Was that choice correct[Y][N]?");
+                    String answer = scanner.next();
+                    if (answer.equalsIgnoreCase("Y")){
+                        break;
+                    }
+                }
+                else if (choice <= -1 || choice >= images.size()){
+                    System.out.println("\nInvalid choice. Please select a number from the list!");
+                }
+                else {
+                    System.out.print("You selected image " + String.valueOf(choice+1) + ". Was this choice correct[Y][N]?");
+                    String answer = scanner.next();
+                    if (answer.equalsIgnoreCase("Y")){
+                        break;
+                    }
+                }
+            }while (true);
+
+            ImageEditor.setCurrentImage(ImageEditor.getCurrentSession().images.get(choice));
+
         }
         else{
             System.out.println("No Images in Session #" + sessionID);
