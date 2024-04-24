@@ -1,4 +1,4 @@
-# Object-Oriented-Programming-Part-1-Project
+# Object-Oriented-Programming-Part-1-Project - Image Editor
 University Project for "Object Oriented Programming - Part 1 Project"
 A simple CLI Application for Editing Images.
 
@@ -8,17 +8,17 @@ A simple CLI Application for Editing Images.
 - [Technologies Used](#technologies-used)
 - [License](#license)
 
-  ## Features
+## Features
 
 - Convert images to negative, grayscale and monochrome
 - Rotate images
 - Create collages
 - Manage sessions
 
-  ## Technologies Used
+## Technologies Used
 
 - [Java](https://www.oracle.com/java/)
 
-  ## License
+## License
 
-  This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
