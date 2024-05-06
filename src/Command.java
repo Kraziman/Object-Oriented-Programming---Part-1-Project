@@ -1,3 +1,4 @@
+import java.io.IOException;
 
 public enum Command {
 
@@ -123,6 +124,20 @@ public enum Command {
     SWITCHSESSION{
         @Override
         public void handle(){
+            if (ImageEditor.getInputArray().length <= 1){
+                throw new InvalidCommandFormat("Invalid command format! Try switchsession <session id>");
+            }{
+                if (ImageEditor.getCurrentSession() != null && ImageEditor.getCurrentSession().getImages() != null){
+                    ImageEditor.getCurrentSession().writeSessionData(null);
+                }
+                ImageEditor.setUserCommandParameters(ImageEditor.getInputArray()[1].split("\\s+", 1));
+
+                try {
+                    ImageEditor.setCurrentSession(new Session(Integer.parseInt(ImageEditor.getUserCommandParameters()[0])));
+                } catch (InvalidPathException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
 
         }
 

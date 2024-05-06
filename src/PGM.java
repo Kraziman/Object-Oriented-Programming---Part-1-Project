@@ -7,6 +7,7 @@ public class PGM extends Image{
     public PGM(String directory) {
         super(directory, "P5", 255);
         this.fileName = checkImageName(directory);
+        this.imageData = null;
         try{
             this.file = new File(directory);
             if (!file.exists()){
@@ -16,6 +17,18 @@ public class PGM extends Image{
         } catch (IOException e) {
             System.out.println("File does not exist or invalid directory!");
         }
+    }
+
+    public PGM(String magicNumber, String comment, String dimensions, String RGBValue, String RGBData, String directory){
+        super(directory, "P1", 1);
+        this.fileName = checkImageName(directory);
+        imageData.add(magicNumber);
+        if (comment != null) imageData.add(comment);
+        imageData.add(dimensions);
+        if (RGBValue != null) imageData.add(RGBValue);
+        imageData.add(RGBData);
+
+        readImageData();
     }
 
     @Override
@@ -61,7 +74,7 @@ public class PGM extends Image{
 
     @Override
     public void readImageData(){
-        imageData = Image.imageReader(directory);
+        if (imageData == null) imageData = Image.imageReader(directory);
         imageDataStart = 3;
         for (int i = 0; i < imageData.size(); i++){
             if (imageData.get(i).contains("#")){

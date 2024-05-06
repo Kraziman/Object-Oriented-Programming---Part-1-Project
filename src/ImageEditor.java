@@ -1,4 +1,6 @@
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -13,6 +15,10 @@ public class ImageEditor {
     private static Image currentImage;
 
     public ImageEditor() {
+        if (!Files.exists(Path.of("Sessions/"))){
+            new File("Sessions/").mkdir();
+        }
+
         Scanner scanner = new Scanner(System.in);
 
         //TODO: When adding the image and the session is null a new session needs to be created.

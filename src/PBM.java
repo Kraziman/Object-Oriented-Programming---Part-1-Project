@@ -8,6 +8,7 @@ public class PBM extends Image{
     public PBM(String directory) {
         super(directory, "P1", 1);
         this.fileName = checkImageName(directory);
+        this.imageData = null;
         //TODO: Use Try catch block to check if image exists.(If IO.File reads
         // null the file does not exist and it should return exception, maybe a custom exception)
         try{
@@ -20,6 +21,18 @@ public class PBM extends Image{
             System.out.println("File does not exist or invalid directory!");
         }
     }
+
+        public PBM(String magicNumber, String comment, String dimensions, String RGBValue, String RGBData, String directory){
+            super(directory, "P1", 1);
+            this.fileName = checkImageName(directory);
+            imageData.add(magicNumber);
+            if (comment != null) imageData.add(comment);
+            imageData.add(dimensions);
+            if (RGBValue != null) imageData.add(RGBValue);
+            imageData.add(RGBData);
+
+            readImageData();
+        }
 
     @Override
     public void rotate(Direction d){
@@ -59,7 +72,7 @@ public class PBM extends Image{
 
     @Override
     public void readImageData(){
-        imageData = Image.imageReader(directory);
+        if (imageData == null) imageData = Image.imageReader(directory);
         imageDataStart = 2;
         for (int i = 0; i < imageData.size(); i++){
             if (imageData.get(i).contains("#")){

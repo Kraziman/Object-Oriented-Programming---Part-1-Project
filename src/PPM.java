@@ -6,8 +6,7 @@ public class PPM extends Image{
     public PPM(String directory) {
         super(directory, "P6", 255);
         this.fileName = checkImageName(directory);
-        imageRGBData = new ArrayList<>();
-        imageData = new ArrayList<>();
+        this.imageData = null;
         //TODO: Use Try catch block to check if image exists.(If IO.File reads
         // null the file does not exist and it should return exception, maybe a custom exception)
         try{
@@ -19,6 +18,19 @@ public class PPM extends Image{
         } catch (IOException e) {
             System.out.println("File does not exist or invalid directory!");
         }
+    }
+
+    public PPM(String magicNumber, String comment, String dimensions, String RGBValue, String RGBData, String directory){
+        super(directory, "P1", 1);
+        this.fileName = checkImageName(directory);
+        this.imageData = new ArrayList<>();
+        imageData.add(magicNumber);
+        if (comment != null) imageData.add(comment);
+        imageData.add(dimensions);
+        if (RGBValue != null) imageData.add(RGBValue);
+        imageData.add(RGBData);
+
+        readImageData();
     }
 
     @Override
@@ -64,7 +76,8 @@ public class PPM extends Image{
 
     @Override
     public void readImageData(){
-        imageData = Image.imageReader(directory);
+        if (imageData == null) imageData = Image.imageReader(directory);
+        imageRGBData = new ArrayList<>();
         imageDataStart = 3;
         for (int i = 0; i < imageData.size(); i++){
             if (imageData.get(i).contains("#")){

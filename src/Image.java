@@ -21,6 +21,13 @@ public abstract class Image {
         this.fileName = checkImageName(directory);
     }
 
+    public Image (String magicNumber, String comment, String dimensions, String RGBValue, String RGBData, String directory){
+        this.magicNumber = magicNumber;
+        this.RGBValue = Integer.parseInt(RGBValue);
+        this.directory = directory;
+        this.fileName = checkImageName(directory);
+    }
+
     public ImageType getImageType(){
         return null;
     }
