@@ -77,7 +77,16 @@ public class Session {
     }
 
     public void sessionInfo(){
-
+        System.out.println("\nInformation for Session #" + sessionID + ":");
+        System.out.println("There are total of " + images.size() + " images");
+        if (!images.isEmpty()){
+            int i = 1;
+            for (Image image : images){
+                System.out.println(i + ". " + image.fileName);
+                i++;
+            }
+            System.out.println();
+        }
     }
 
     public void switchImage(){

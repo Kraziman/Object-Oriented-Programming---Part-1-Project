@@ -5,7 +5,8 @@ public enum Command {
     LOAD{
         @Override
         public void handle(){
-
+            //LOADS SESSIONS SIMILAR TO SWITCHSESSION.
+            //MAYBE REMOVE AND REPLACE WITH SAVEAS COMMAND
         }
 
         @Override
@@ -101,7 +102,12 @@ public enum Command {
     SESSIONINFO{
         @Override
         public void handle(){
-
+            if (ImageEditor.getCurrentSession() != null){
+                ImageEditor.getCurrentSession().sessionInfo();
+            }
+            else{
+                System.out.println("You need to make/open a session before using this command!");
+            }
         }
 
         @Override
