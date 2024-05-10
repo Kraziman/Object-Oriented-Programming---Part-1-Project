@@ -91,7 +91,7 @@ public class ImageEditor {
 
     }
 
-    public void switchSession() {
+    public static void switchSession() {
 
     }
 

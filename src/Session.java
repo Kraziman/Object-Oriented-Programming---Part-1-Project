@@ -10,9 +10,7 @@ public class Session {
     private File file;
     /*Purpose of this Stack is to save all the changes in the current session and
     have the ability to undo*/
-    private Stack<Image[]> sessionChanges; //TODO: maybe temp, maybe make your own stack or use list
-    // TODO: In case this stays make it so it saves the last version of the session class before the change in every single method that changes something.
-
+    private Stack<Image[]> sessionChanges; //TODO: Change the stack to arraylist or list for undo and redo.
     public Session() {
         images = new ArrayList<>();
         sessionData = new ArrayList<>();
@@ -57,7 +55,7 @@ public class Session {
             imageType = ImageType.valueOf(Image.checkImageType(ImageEditor.getUserCommandParameters()[0]));
             ImageEditor.setCurrentImage(imageType.handle(ImageEditor.getUserCommandParameters()[0]));
             ImageEditor.getCurrentSession().getImages().add(ImageEditor.getCurrentImage());
-            ImageEditor.getCurrentSession().writeSessionData(ImageEditor.getCurrentImage());
+            ImageEditor.getCurrentSession().writeSessionData();
         }
         catch (InvalidPathException e){
             System.out.println(e.getMessage());
@@ -238,36 +236,21 @@ public class Session {
         * */
     }
 
-    protected void writeSessionData(Image image){
+    protected void writeSessionData(){
         StringBuilder temp = new StringBuilder();
-        if (temp != null){
-            for (int i = 0; i< image.imageData.size(); i++){
-                if (i < image.imageDataStart){
-                    sessionData.add(image.imageData.get(i) + "\n");
-                }
-                else{
-                    temp.append(image.imageData.get(i)).append(" ");
-                }
-            }
-            sessionData.add(String.valueOf(temp) + "\n");
-            sessionData.add(image.directory + "\n");
-            sessionData.add("\n");
-        }
-        else {
-            sessionData = null;
-            for (Image image1 : images){
-                for (int i = 0; i< image1.imageData.size(); i++){
-                    if (i < image1.imageDataStart){
-                        sessionData.add(image1.imageData.get(i) + "\n");
+            sessionData = new ArrayList<>();
+            for (Image image : images){
+                for (int i = 0; i< image.imageData.size(); i++){
+                    if (i < image.imageDataStart){
+                        sessionData.add(image.imageData.get(i) + "\n");
                     }
                     else{
-                        temp.append(image1.imageData.get(i)).append(" ");
+                        temp.append(image.imageData.get(i)).append(" ");
                     }
                 }
                 sessionData.add(String.valueOf(temp) + "\n");
                 sessionData.add(image.directory + "\n");
             }
-        }
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(this.file, false))){
             for (String data : sessionData){
