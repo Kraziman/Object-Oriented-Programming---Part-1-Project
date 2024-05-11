@@ -29,7 +29,23 @@ public enum Command {
     GRAYSCALE{
         @Override
         public void handle(){
-            ImageEditor.getCurrentImage().grayscale();
+            if (ImageEditor.getCurrentImage() != null){
+                ImageEditor.getCurrentImage().grayscale();
+            }
+            else {
+                if (ImageEditor.getCurrentSession() == null){
+                    System.out.println("You need to create/open a session first!");
+                }
+                else if (ImageEditor.getCurrentSession().getImages().isEmpty()){
+                    System.out.println("There are no images in the current session!");
+                }
+                else if (ImageEditor.getCurrentImage() == null){
+                    System.out.println("You need to select an image before trying that!");
+                }
+                else {
+                    System.out.println("Unexpected error!");
+                }
+            }
         }
 
         @Override
@@ -41,7 +57,23 @@ public enum Command {
     MONOCHROME{
         @Override
         public void handle(){
-            ImageEditor.getCurrentImage().monochrome();
+            if (ImageEditor.getCurrentImage() != null){
+                ImageEditor.getCurrentImage().monochrome();
+            }
+            else {
+                if (ImageEditor.getCurrentSession() == null){
+                    System.out.println("You need to create/open a session first!");
+                }
+                else if (ImageEditor.getCurrentSession().getImages().isEmpty()){
+                    System.out.println("There are no images in the current session!");
+                }
+                else if (ImageEditor.getCurrentImage() == null){
+                    System.out.println("You need to select an image before trying that!");
+                }
+                else {
+                    System.out.println("Unexpected error!");
+                }
+            }
         }
 
         @Override
@@ -53,7 +85,23 @@ public enum Command {
     NEGATIVE{
         @Override
         public void handle(){
-            ImageEditor.getCurrentImage().negative();
+            if (ImageEditor.getCurrentImage() != null){
+                ImageEditor.getCurrentImage().negative();
+            }
+            else {
+                if (ImageEditor.getCurrentSession() == null){
+                    System.out.println("You need to create/open a session first!");
+                }
+                else if (ImageEditor.getCurrentSession().getImages().isEmpty()){
+                    System.out.println("There are no images in the current session!");
+                }
+                else if (ImageEditor.getCurrentImage() == null){
+                    System.out.println("You need to select an image before trying that!");
+                }
+                else {
+                    System.out.println("Unexpected error!");
+                }
+            }
         }
 
         @Override
