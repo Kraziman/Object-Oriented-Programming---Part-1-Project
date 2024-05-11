@@ -1,16 +1,14 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.Stack;
 
 public class Session {
-    private int sessionID;
+    private final int sessionID;
     private ArrayList<Image> images;
     private ArrayList<String> sessionData;
     private File file;
-    /*Purpose of this Stack is to save all the changes in the current session and
-    have the ability to undo*/
-    private Stack<Image[]> sessionChanges; //TODO: Change the stack to arraylist or list for undo and redo.
+    private ArrayList<Session> undo; //TODO: Save the last instance of the session before a change and makes the redo arraylist null
+    private ArrayList<Session> redo; //TODO: removes the last saved instance in undo, and redoes the last changes
     public Session() {
         images = new ArrayList<>();
         sessionData = new ArrayList<>();
@@ -41,16 +39,12 @@ public class Session {
     }
 
     public static void add(){
-        //TODO: ADD a check if a image with the same name exists, and change its name to name_1.extension.
-        //TODO: Fix a bug where object of a non-existent image is created and saved in the session.
-        //TODO: Make it so images are automatically saved in the Session's folder when added.
         ImageType imageType;
         try {
             if (ImageEditor.getCurrentSession() == null){
                 ImageEditor.setCurrentSession(new Session());
             }
 
-            // Set the image directory in userCommandParameters
             ImageEditor.setUserCommandParameters(ImageEditor.getInputArray()[1].split("\\s+", 1));
             imageType = ImageType.valueOf(Image.checkImageType(ImageEditor.getUserCommandParameters()[0]));
             ImageEditor.setCurrentImage(imageType.handle(ImageEditor.getUserCommandParameters()[0]));
@@ -62,7 +56,6 @@ public class Session {
         }
 
         System.out.println("ADDED!");
-        //TODO: Check if the image exists first, then finish the readImageData methods in the PBM/PGM/PPM classes
 
     }
 
@@ -91,52 +84,54 @@ public class Session {
     }
 
     public void switchImage(){
-        //TODO: If the session has no images, or has only one image return appropriate message,
-        // first show a list of all the images in the session. Then ask
-        // which image would you like to switch to. Then switch to the image.
         if (images != null){
-            int currentNumber = 0;
-            int i;
-            int choice;
-            System.out.println("Select and image from the list:");
+            if (images.size() <= 1){
+                System.out.println("Cannot switch to another image when there is only one image in the session!");
+            }
+            else {
+                int currentNumber = 0;
+                int i;
+                int choice;
+                System.out.println("Select and image from the list:");
 
 
-            Scanner scanner = new Scanner(System.in);
-            do {
-                i = 1;
-                for (Image image : images){
-                    System.out.print(i + ". " + image.fileName);
-                    if (image.equals(ImageEditor.getCurrentImage())){
-                        System.out.print("\t\t<-Current Image");
-                        currentNumber = i-1;
+                Scanner scanner = new Scanner(System.in);
+                do {
+                    i = 1;
+                    for (Image image : images){
+                        System.out.print(i + ". " + image.fileName);
+                        if (image.equals(ImageEditor.getCurrentImage())){
+                            System.out.print("\t\t<-Current Image");
+                            currentNumber = i-1;
+                        }
+                        System.out.print("\n");
+                        i++;
                     }
-                    System.out.print("\n");
-                    i++;
-                }
 
-                System.out.print("Please choose the number corresponding to the image you'd like to switch to: ");
-                choice = scanner.nextInt() - 1;
+                    System.out.print("Please choose the number corresponding to the image you'd like to switch to: ");
+                    choice = scanner.nextInt() - 1;
 
-                if (currentNumber == choice){
-                    System.out.print("\nYou selected the current image. Was that choice correct[Y][N]?");
-                    String answer = scanner.next();
-                    if (answer.equalsIgnoreCase("Y")){
-                        break;
+                    if (currentNumber == choice){
+                        System.out.print("\nYou selected the current image. Was that choice correct[Y][N]?");
+                        String answer = scanner.next();
+                        if (answer.equalsIgnoreCase("Y")){
+                            break;
+                        }
                     }
-                }
-                else if (choice <= -1 || choice >= images.size()){
-                    System.out.println("\nInvalid choice. Please select a number from the list!");
-                }
-                else {
-                    System.out.print("You selected image " + String.valueOf(choice+1) + ". Was this choice correct[Y][N]?");
-                    String answer = scanner.next();
-                    if (answer.equalsIgnoreCase("Y")){
-                        break;
+                    else if (choice <= -1 || choice >= images.size()){
+                        System.out.println("\nInvalid choice. Please select a number from the list!");
                     }
-                }
-            }while (true);
+                    else {
+                        System.out.print("You selected image " + (choice + 1) + ". Was this choice correct[Y][N]?");
+                        String answer = scanner.next();
+                        if (answer.equalsIgnoreCase("Y")){
+                            break;
+                        }
+                    }
+                }while (true);
 
-            ImageEditor.setCurrentImage(ImageEditor.getCurrentSession().images.get(choice));
+                ImageEditor.setCurrentImage(ImageEditor.getCurrentSession().images.get(choice));
+            }
 
         }
         else{
@@ -160,7 +155,7 @@ public class Session {
         }
 
         String magicNumber = null, comment = null, dimensions = null, RGBValue = null, RGBData = null, directory = null;
-        int dataCounter = 0; // Counts the number of read rows for each image seperatly.
+        int dataCounter = 0; // Counts the number of read rows for each image separately.
         // 0 - magicNumber, 1 - comment, 2 - dimensions, 3 - RGBValue, 4 - RGBData, 5 - Directory, 6 - Create Image
 
         for (String line : sessionData){
@@ -225,14 +220,14 @@ public class Session {
         * magic number <--- depending on the magic number it will read the next lines differently
         * comment?
         * dimension
-        * rgbvalue?
+        * rgb value?
         * imageData <---- write everything on the same row so its more compact
         * directory
         * empty space
         * magic number <--- depending on the magic number it will read the next lines differently
         * comment?
         * dimension
-        * rgbvalue?
+        * rgb value?
         * imageData <---- write everything on the same row so its more compact
         * directory
         * empty space
@@ -251,7 +246,7 @@ public class Session {
                         temp.append(image.imageData.get(i)).append(" ");
                     }
                 }
-                sessionData.add(String.valueOf(temp) + "\n");
+                sessionData.add(temp + "\n");
                 sessionData.add(image.directory + "\n");
             }
 

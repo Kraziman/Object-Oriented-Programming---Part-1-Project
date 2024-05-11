@@ -7,8 +7,7 @@ public class PPM extends Image{
         super(directory, "P6", 255);
         this.fileName = checkImageName(directory);
         this.imageData = null;
-        //TODO: Use Try catch block to check if image exists.(If IO.File reads
-        // null the file does not exist and it should return exception, maybe a custom exception)
+
         try{
             this.file = new File(directory);
             if (!file.exists()){
@@ -137,7 +136,7 @@ public class PPM extends Image{
             String[] temp = imageRGBData.get(i).split(" ");
                 StringBuilder tempString = new StringBuilder();
                 for (int j =0; j < temp.length; j+=3){
-                    temp[j] = String.valueOf((int)(Float.parseFloat(temp[j])*0.2990 + Float.parseFloat(temp[j+1])*0.5870 + Float.parseFloat(temp[j+2])*0.1140));;
+                    temp[j] = String.valueOf((int)(Float.parseFloat(temp[j])*0.2990 + Float.parseFloat(temp[j+1])*0.5870 + Float.parseFloat(temp[j+2])*0.1140));
                     tempString.append(temp[j]).append(" ").append(temp[j]).append(" ").append(temp[j]).append(" ");
                 }
                 imageRGBData.set(i, String.valueOf(tempString));
@@ -159,13 +158,13 @@ public class PPM extends Image{
     }
 
     @Override
-    public void monochrome(){ //TODO: FIX CAUSE DOESNT WORK
+    public void monochrome(){
         //Convert to grayscale
         for (int i = 0; i < imageRGBData.size(); i++){
             String[] temp = imageRGBData.get(i).split("\\s+");
             StringBuilder tempString = new StringBuilder();
             for (int j =0; j < temp.length; j+=3){
-                temp[j] = String.valueOf((int)(Float.parseFloat(temp[j])*0.2990 + Float.parseFloat(temp[j+1])*0.5870 + Float.parseFloat(temp[j+2])*0.1140));;
+                temp[j] = String.valueOf((int)(Float.parseFloat(temp[j])*0.2990 + Float.parseFloat(temp[j+1])*0.5870 + Float.parseFloat(temp[j+2])*0.1140));
                 tempString.append(temp[j]).append(" ").append(temp[j]).append(" ").append(temp[j]).append(" ");
             }
             imageRGBData.set(i, String.valueOf(tempString));
@@ -178,7 +177,7 @@ public class PPM extends Image{
             String[] temp = imageRGBData.get(i).split("\\s+");
                 StringBuilder tempString = new StringBuilder();
                 for (int j =0; j < temp.length; j+=3){
-                    if (Integer.parseInt(temp[j]) < 128.00){ //TODO: Fix wrong number format
+                    if (Integer.parseInt(temp[j]) < 128.00){
                         temp[j] = "0";
                     }
                     else {

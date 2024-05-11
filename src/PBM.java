@@ -22,7 +22,7 @@ public class PBM extends Image{
         }
     }
 
-        public PBM(String magicNumber, String comment, String dimensions, String RGBValue, String RGBData, String directory){
+    public PBM(String magicNumber, String comment, String dimensions, String RGBValue, String RGBData, String directory){
             super(directory, "P1", 1);
             this.fileName = checkImageName(directory);
             imageData.add(magicNumber);
@@ -116,5 +116,10 @@ public class PBM extends Image{
     @Override
     public void monochrome(){
         System.out.println("Image is already monochrome!");
+    }
+
+    @Override
+    public ImageType getImageType(){
+        return ImageType.PBM;
     }
 }

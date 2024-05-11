@@ -1,14 +1,12 @@
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Map;
 import java.util.Scanner;
 
 public class ImageEditor {
     private static boolean exitRequested = false;
     private static Command userCommand = null;
     private static String[] userCommandParameters = null;
-    int numberOfParameters = 0;
     private static String input;
     private static String[] inputArray;
     private static Session currentSession;
@@ -21,7 +19,6 @@ public class ImageEditor {
 
         Scanner scanner = new Scanner(System.in);
 
-        //TODO: When adding the image and the session is null a new session needs to be created.
         do {
             try {
                 System.out.print("Enter a command (or type 'exit' to exit): ");
@@ -57,10 +54,6 @@ public class ImageEditor {
         return inputArray;
     }
 
-    public static void setInputArray(String[] inputArray) {
-        ImageEditor.inputArray = inputArray;
-    };
-
     public static Session getCurrentSession() {
         if (currentSession != null){
             return currentSession;
@@ -82,10 +75,6 @@ public class ImageEditor {
         ImageEditor.currentImage = currentImage;
     }
 
-
-    public void load() {
-
-    }
 
     public void save() {
 
