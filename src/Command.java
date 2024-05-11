@@ -251,9 +251,23 @@ public enum Command {
             if (ImageEditor.getInputArray().length <= 1){
                 throw new InvalidCommandFormat("Invalid command format! Try rotate <direction>");
             }
-            else {
+            else if (ImageEditor.getCurrentImage() != null){
                 ImageEditor.setUserCommandParameters(ImageEditor.getInputArray()[1].split("\\s+", 1));
                 ImageEditor.getCurrentImage().rotate(Direction.valueOf(ImageEditor.getUserCommandParameters()[0].toUpperCase()));
+            }
+            else {
+                if (ImageEditor.getCurrentSession() == null){
+                    System.out.println("You need to create/open a session first!");
+                }
+                else if (ImageEditor.getCurrentSession().getImages().isEmpty()){
+                    System.out.println("There are no images in the current session!");
+                }
+                else if (ImageEditor.getCurrentImage() == null){
+                    System.out.println("You need to select an image before trying that!");
+                }
+                else {
+                    System.out.println("Unexpected error!");
+                }
             }
         }
 
