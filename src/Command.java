@@ -129,22 +129,11 @@ public enum Command {
     SWITCHSESSION{
         @Override
         public void handle(){
-            //TODO: move it to switchsession in the ImageEditor class
             if (ImageEditor.getInputArray().length <= 1){
                 throw new InvalidCommandFormat("Invalid command format! Try switchsession <session id>");
             }
             else {
                 ImageEditor.switchSession();
-                if (ImageEditor.getCurrentSession() != null && ImageEditor.getCurrentSession().getImages() != null){
-                    ImageEditor.getCurrentSession().writeSessionData();
-                }
-                ImageEditor.setUserCommandParameters(ImageEditor.getInputArray()[1].split("\\s+", 1));
-
-                try {
-                    ImageEditor.setCurrentSession(new Session(Integer.parseInt(ImageEditor.getUserCommandParameters()[0])));
-                } catch (InvalidPathException e) {
-                    System.out.println(e.getMessage());
-                }
             }
 
         }

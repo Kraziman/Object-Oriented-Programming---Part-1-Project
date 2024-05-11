@@ -79,11 +79,14 @@ public class Session {
         System.out.println("There are total of " + images.size() + " images");
         if (!images.isEmpty()){
             int i = 1;
-            for (Image image : images){
-                System.out.println(i + ". " + image.fileName);
+            for (Image image : images) {
+                System.out.print(i + ". " + image.fileName);
+                if (image.equals(ImageEditor.getCurrentImage())) {
+                    System.out.print("\t\t<-Current Image");
+                }
+                System.out.print("\n");
                 i++;
             }
-            System.out.println();
         }
     }
 

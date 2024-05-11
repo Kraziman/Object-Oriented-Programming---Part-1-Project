@@ -92,7 +92,17 @@ public class ImageEditor {
     }
 
     public static void switchSession() {
+        if (currentSession != null && !currentSession.getImages().isEmpty()){
+            currentSession.writeSessionData();
+        }
+        userCommandParameters = inputArray[1].split("\\s+", 1);
 
+        try {
+            currentSession = new Session(Integer.parseInt(userCommandParameters[0]));
+            currentImage = currentSession.getImages().getFirst();
+        } catch (InvalidPathException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void collage() {
