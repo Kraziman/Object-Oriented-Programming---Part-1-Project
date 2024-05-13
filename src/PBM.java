@@ -36,6 +36,7 @@ public class PBM extends Image{
 
     @Override
     public void rotate(Direction d){
+        Session.undoRedoChange();
         String[][] tempString = new String[imageHeight][imageWidth];
         for (int i = 0; i < imageHeight; i++) {
             for (int j = 0; j < imageWidth; j++) {
@@ -67,6 +68,14 @@ public class PBM extends Image{
 
         for (int i = imageDataStart; i < imageData.size(); i++){
             imageData.set(i, imageRGBData.get(i-imageDataStart));
+        }
+
+        System.out.print("\tDONE!\n");
+
+        ImageEditor.getCurrentSession().getImages().set(ImageEditor.getCurrentImageIndex(), ImageEditor.getCurrentImage());
+
+        if (ImageEditor.getCurrentSession() != null) {
+            ImageEditor.getCurrentSession().writeSessionData();
         }
     }
 
@@ -102,9 +111,18 @@ public class PBM extends Image{
 
     @Override
     public void negative(){
+        Session.undoRedoChange();
         imageRGBData.replaceAll(s -> String.valueOf(1 - Integer.parseInt(s)));
         for (int i = imageDataStart; i< imageData.size(); i++){
             imageData.set(i, imageRGBData.get(i-imageDataStart));
+        }
+
+        System.out.print("\tDONE!\n");
+
+        ImageEditor.getCurrentSession().getImages().set(ImageEditor.getCurrentImageIndex(), ImageEditor.getCurrentImage());
+
+        if (ImageEditor.getCurrentSession() != null) {
+            ImageEditor.getCurrentSession().writeSessionData();
         }
     }
 

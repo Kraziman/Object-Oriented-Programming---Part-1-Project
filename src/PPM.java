@@ -39,6 +39,7 @@ public class PPM extends Image{
 
     @Override
     public void rotate(Direction d){
+        Session.undoRedoChange();
         String[][] tempString = new String[imageHeight][imageWidth];
         for (int i = 0; i < imageHeight; i++) {
             for (int j = 0; j < imageWidth; j++) {
@@ -70,6 +71,14 @@ public class PPM extends Image{
 
         for (int i = imageDataStart; i < imageData.size(); i++){
             imageData.set(i, imageRGBData.get(i-imageDataStart));
+        }
+
+        System.out.print("\tDONE!\n");
+
+        ImageEditor.getCurrentSession().getImages().set(ImageEditor.getCurrentImageIndex(), ImageEditor.getCurrentImage());
+
+        if (ImageEditor.getCurrentSession() != null) {
+            ImageEditor.getCurrentSession().writeSessionData();
         }
     }
 
@@ -106,6 +115,7 @@ public class PPM extends Image{
 
     @Override
     public void negative(){
+        Session.undoRedoChange();
         for (int i = 0; i < imageRGBData.size(); i++){
             String[] temp = imageRGBData.get(i).split(" ");
             StringBuilder tempString = new StringBuilder();
@@ -118,20 +128,18 @@ public class PPM extends Image{
             imageData.set(imageDataStart + i, imageRGBData.get(i));
         }
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("Sessions/Session_" + ImageEditor.getCurrentSession().getSessionID() + "/Images/" + fileName))){
-            //TODO: make the name of the new ppm file be "nameOfFile_NEW.ppm" and implement this in the save function
-            for (String tempData : imageData){
-                writer.write(tempData);
-                writer.newLine();
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
         System.out.print("\tDONE!\n");
+
+        ImageEditor.getCurrentSession().getImages().set(ImageEditor.getCurrentImageIndex(), ImageEditor.getCurrentImage());
+
+        if (ImageEditor.getCurrentSession() != null) {
+            ImageEditor.getCurrentSession().writeSessionData();
+        }
     }
 
     @Override
     public void grayscale(){
+        Session.undoRedoChange();
         for (int i = 0; i < imageRGBData.size(); i++){
             String[] temp = imageRGBData.get(i).split(" ");
                 StringBuilder tempString = new StringBuilder();
@@ -145,20 +153,18 @@ public class PPM extends Image{
             imageData.set(i, imageRGBData.get(i-imageDataStart));
         }
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("images/new_grayscale_ppm.ppm"))){
-            //TODO: make the name of the new ppm file be "nameOfFile_NEW.ppm" and implement this in the save function
-            for (String tempData : imageData){
-                writer.write(tempData);
-                writer.newLine();
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
         System.out.print("\tDONE!\n");
+
+        ImageEditor.getCurrentSession().getImages().set(ImageEditor.getCurrentImageIndex(), ImageEditor.getCurrentImage());
+
+        if (ImageEditor.getCurrentSession() != null) {
+            ImageEditor.getCurrentSession().writeSessionData();
+        }
     }
 
     @Override
     public void monochrome(){
+        Session.undoRedoChange();
         //Convert to grayscale
         for (int i = 0; i < imageRGBData.size(); i++){
             String[] temp = imageRGBData.get(i).split("\\s+");
@@ -191,15 +197,12 @@ public class PPM extends Image{
             imageData.set(i, imageRGBData.get(i-imageDataStart-3));
         }
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("images/new_monochrome_ppm.ppm"))){
-            //TODO: make the name of the new ppm file be "nameOfFile_NEW.ppm" and implement this in the save function
-            for (String tempData : imageData){
-                writer.write(tempData);
-                writer.newLine();
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
         System.out.print("\tDONE!\n");
+
+        ImageEditor.getCurrentSession().getImages().set(ImageEditor.getCurrentImageIndex(), ImageEditor.getCurrentImage());
+
+        if (ImageEditor.getCurrentSession() != null) {
+            ImageEditor.getCurrentSession().writeSessionData();
+        }
     }
 }

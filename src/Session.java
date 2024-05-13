@@ -7,13 +7,13 @@ public class Session {
     private ArrayList<Image> images;
     private ArrayList<String> sessionData;
     private File file;
-    private ArrayList<Session> undo; //TODO: Save the last instance of the session before a change and makes the redo arraylist null
-    private ArrayList<Session> redo; //TODO: removes the last saved instance in undo, and redoes the last changes
+    private static ArrayList<sessionHistory> undo; //TODO: Save the last instance of the session before a change and makes the redo arraylist null
+    private static ArrayList<sessionHistory> redo; //TODO: removes the last saved instance in undo, and redoes the last changes
     public Session() {
         images = new ArrayList<>();
         sessionData = new ArrayList<>();
-        //TODO: finish the constructor
-        //TODO: Add ID generator
+        undo = new ArrayList<>();
+        redo = new ArrayList<>();
         for (int i=0; true; i++){
             this.file = new File("Sessions/Session_" + i + ".data");
             if (!this.file.exists()){
@@ -21,17 +21,22 @@ public class Session {
                 break;
             }
         }
+        ImageEditor.setCurrentImageIndex(0);
+
     }
 
     public Session(int sessionID) throws InvalidPathException {
         images = new ArrayList<>();
         sessionData = new ArrayList<>();
+        undo = new ArrayList<>();
+        redo = new ArrayList<>();
         this.file = new File ("Sessions/Session_" + sessionID + ".data");
         if (!this.file.exists()){
             throw new InvalidPathException("Session does not exist!");
         }
         this.sessionID = sessionID;
         readSessionData();
+        ImageEditor.setCurrentImageIndex(0);
     }
 
     public int getSessionID() {
@@ -39,6 +44,7 @@ public class Session {
     }
 
     public static void add(){
+        Session.undoRedoChange();
         ImageType imageType;
         try {
             if (ImageEditor.getCurrentSession() == null){
@@ -49,21 +55,56 @@ public class Session {
             imageType = ImageType.valueOf(Image.checkImageType(ImageEditor.getUserCommandParameters()[0]));
             ImageEditor.setCurrentImage(imageType.handle(ImageEditor.getUserCommandParameters()[0]));
             ImageEditor.getCurrentSession().getImages().add(ImageEditor.getCurrentImage());
-            ImageEditor.getCurrentSession().writeSessionData();
+            ImageEditor.setCurrentImageIndex(ImageEditor.getCurrentSession().getImages().size()-1);
         }
         catch (InvalidPathException e){
             System.out.println(e.getMessage());
         }
 
         System.out.println("ADDED!");
+        if (ImageEditor.getCurrentSession() != null) {
+            ImageEditor.getCurrentSession().writeSessionData();
+        }
 
     }
 
-    public void undo(){
+    //TODO: FIX undo,redo and undoRedoChange, cause they don't fucking work SMH MY FUCKING HEAD
+    public static void undo(){
+        if (undo == null || undo.isEmpty()){
+            System.out.println("Nothing to undo!");
+        }
+        else {
+            redo.add(undo.getLast());
+            ImageEditor.setCurrentSession(undo.getLast().getSession());
+            ImageEditor.setCurrentImageIndex(undo.getLast().getCurrentImageIndex());
+            ImageEditor.setCurrentImage(ImageEditor.getCurrentSession().getImages().get(ImageEditor.getCurrentImageIndex()));
+            undo.removeLast();
+            if (ImageEditor.getCurrentSession() != null) {
+                ImageEditor.getCurrentSession().writeSessionData();
+            }
+        }
 
     }
 
-    public void redo(){
+    public static void redo(){
+        if (redo == null || redo.isEmpty()){
+            System.out.println("Nothing to redo!");
+        }
+        else {
+            undo.add(redo.getLast());
+            ImageEditor.setCurrentSession(redo.getLast().getSession());
+            ImageEditor.setCurrentImageIndex(redo.getLast().getCurrentImageIndex());
+            ImageEditor.setCurrentImage(ImageEditor.getCurrentSession().getImages().get(ImageEditor.getCurrentImageIndex()));
+            redo.removeLast();
+            if (ImageEditor.getCurrentSession() != null) {
+                ImageEditor.getCurrentSession().writeSessionData();
+            }
+        }
+    }
+
+    public static void undoRedoChange(){
+        undo.add(new sessionHistory(ImageEditor.getCurrentSession(), ImageEditor.getCurrentImageIndex()));
+        redo = new ArrayList<>();
 
     }
 
@@ -125,6 +166,8 @@ public class Session {
                         System.out.print("You selected image " + (choice + 1) + ". Was this choice correct[Y][N]?");
                         String answer = scanner.next();
                         if (answer.equalsIgnoreCase("Y")){
+                            Session.undoRedoChange();
+                            ImageEditor.setCurrentImageIndex(choice-1);
                             break;
                         }
                     }

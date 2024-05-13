@@ -11,6 +11,7 @@ public class ImageEditor {
     private static String[] inputArray;
     private static Session currentSession;
     private static Image currentImage;
+    private static int currentImageIndex;
 
     public ImageEditor() {
         if (!Files.exists(Path.of("Sessions/"))){
@@ -75,8 +76,20 @@ public class ImageEditor {
         ImageEditor.currentImage = currentImage;
     }
 
+    public static int getCurrentImageIndex() {
+        return currentImageIndex;
+    }
+
+    public static void setCurrentImageIndex(int currentImageIndex) {
+        ImageEditor.currentImageIndex = currentImageIndex;
+    }
+
 
     public void save() {
+
+    }
+
+    public void saveas(){
 
     }
 

@@ -38,6 +38,7 @@ public class PGM extends Image{
 
     @Override
     public void rotate(Direction d){
+        Session.undoRedoChange();
         String[][] tempString = new String[imageHeight][imageWidth];
         for (int i = 0; i < imageHeight; i++) {
             for (int j = 0; j < imageWidth; j++) {
@@ -69,6 +70,14 @@ public class PGM extends Image{
 
         for (int i = imageDataStart; i < imageData.size(); i++){
             imageData.set(i, imageRGBData.get(i-imageDataStart));
+        }
+
+        System.out.print("\tDONE!\n");
+
+        ImageEditor.getCurrentSession().getImages().set(ImageEditor.getCurrentImageIndex(), ImageEditor.getCurrentImage());
+
+        if (ImageEditor.getCurrentSession() != null) {
+            ImageEditor.getCurrentSession().writeSessionData();
         }
     }
 
@@ -106,9 +115,18 @@ public class PGM extends Image{
 
     @Override
     public void negative(){
+        Session.undoRedoChange();
         imageRGBData.replaceAll(s -> String.valueOf(255 - Integer.parseInt(s)));
         for (int i = imageDataStart; i< imageData.size(); i++){
             imageData.set(i, imageRGBData.get(i-imageDataStart));
+        }
+
+        System.out.print("\tDONE!\n");
+
+        ImageEditor.getCurrentSession().getImages().set(ImageEditor.getCurrentImageIndex(), ImageEditor.getCurrentImage());
+
+        if (ImageEditor.getCurrentSession() != null) {
+            ImageEditor.getCurrentSession().writeSessionData();
         }
     }
 
@@ -119,6 +137,7 @@ public class PGM extends Image{
 
     @Override
     public void monochrome(){
+        Session.undoRedoChange();
         for (int i = 0; i < imageRGBData.size(); i++){
             if (Integer.parseInt(imageRGBData.get(i)) < 128){
                 imageRGBData.set(i, "0");
@@ -129,6 +148,14 @@ public class PGM extends Image{
         }
         for (int i = imageDataStart; i< imageData.size(); i++){
             imageData.set(i, imageRGBData.get(i-imageDataStart));
+        }
+
+        System.out.print("\tDONE!\n");
+
+        ImageEditor.getCurrentSession().getImages().set(ImageEditor.getCurrentImageIndex(), ImageEditor.getCurrentImage());
+
+        if (ImageEditor.getCurrentSession() != null) {
+            ImageEditor.getCurrentSession().writeSessionData();
         }
     }
 }

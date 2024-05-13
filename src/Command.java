@@ -113,7 +113,7 @@ public enum Command {
     UNDO{
         @Override
         public void handle(){
-
+            Session.undo();
         }
 
         @Override
@@ -125,7 +125,7 @@ public enum Command {
     REDO{
         @Override
         public void handle(){
-
+            Session.redo();
         }
 
         @Override
