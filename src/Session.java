@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Session {
     private final int sessionID;
-    private ArrayList<Image> images;
+    private final ArrayList<Image> images;
     private ArrayList<String> sessionData;
     private File file;
     private static ArrayList<sessionHistory> undo; //TODO: Save the last instance of the session before a change and makes the redo arraylist null
@@ -199,10 +199,10 @@ public class Session {
 
         String magicNumber = null, comment = null, dimensions = null, RGBValue = null, RGBData = null, directory = null;
         int dataCounter = 0; // Counts the number of read rows for each image separately.
-        // 0 - magicNumber, 1 - comment, 2 - dimensions, 3 - RGBValue, 4 - RGBData, 5 - Directory, 6 - Create Image
+        // 0 - magicNumber, 1 - comment, 2 - dimensions, 3 - RGBValue, 4 - RGBData, 5 - Directory
 
         for (String line : sessionData){
-            if (magicNumber == null || RGBData == null || dimensions == null || RGBValue == null || directory == null){
+            if (magicNumber == null || RGBData == null || dimensions == null || directory == null){
                 //insert the read data in the corresponding String
                 if (!line.contains("#") && dataCounter == 1){
                     dataCounter++;
@@ -232,29 +232,32 @@ public class Session {
                         break;
                 }
 
-                dataCounter++;
-            }
-            else{
-                //create image file
-                switch (magicNumber){
-                    case "P1":
-                        this.images.add(new PBM(magicNumber, comment, dimensions, RGBValue, RGBData, directory));
-                        break;
-                    case "P5":
-                        this.images.add(new PGM(magicNumber, comment, dimensions, RGBValue, RGBData, directory));
-                        break;
-                    case "P6":
-                    case "P3":
-                        this.images.add(new PPM(magicNumber, comment, dimensions, RGBValue, RGBData, directory));
-                        break;
+                if (dataCounter == 5){
+                    //create image file
+                    switch (magicNumber){
+                        case "P1":
+                            this.images.add(new PBM(magicNumber, comment, dimensions, RGBValue, RGBData, directory));
+                            break;
+                        case "P5":
+                            this.images.add(new PGM(magicNumber, comment, dimensions, RGBValue, RGBData, directory));
+                            break;
+                        case "P6":
+                        case "P3":
+                            this.images.add(new PPM(magicNumber, comment, dimensions, RGBValue, RGBData, directory));
+                            break;
+                    }
+                    dataCounter = 0;
+                    magicNumber = null;
+                    comment = null;
+                    dimensions = null;
+                    RGBValue = null;
+                    RGBData = null;
+                    directory = null;
                 }
-                dataCounter = 0;
-                magicNumber = null;
-                comment = null;
-                dimensions = null;
-                RGBValue = null;
-                RGBData = null;
-                directory = null;
+                else {
+                    dataCounter++;
+                }
+
             }
         }
 
@@ -277,7 +280,7 @@ public class Session {
         * */
     }
 
-    protected void writeSessionData(){
+    public void writeSessionData(){
         StringBuilder temp = new StringBuilder();
             sessionData = new ArrayList<>();
             for (Image image : images){
@@ -299,6 +302,94 @@ public class Session {
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void collage(){
+        if (images.size() <= 1){
+            System.out.println("You need at least 2 images in the session to create a collage!");
+        }
+        else {
+            int tempCollageID;
+            int width = 0;
+            int height = 0;
+            ArrayList<String> tempData = new ArrayList<>();
+
+            for (Image image: images){
+                if (image.imageWidth > width){
+                    width = image.imageWidth;
+                }
+                height+= image.imageHeight;
+            }
+
+            for (Image image : images){
+                int i = 0;
+                switch (image.getImageType()){
+                    case PPM:
+                        for (String row : image.imageRGBData){
+                            while (i > image.imageWidth && i < width){
+                                tempData.add("255 255 255");
+                            }
+
+                            if (i < image.imageWidth){
+                                tempData.add(row);
+                            }
+                            else if (i == width){
+                                i = 0;
+                            }
+                            i++;
+                        }
+                        break;
+                    case PGM:
+                        for (String row : image.imageRGBData){
+                            while (i > image.imageWidth && i < width){
+                                tempData.add("255 255 255");
+                            }
+
+                            if (i < image.imageWidth){
+                                tempData.add(row + " " + row + " " + row);
+                            }
+                            else if (i == width){
+                                i = 0;
+                            }
+                            i++;
+                        }
+                        break;
+                    case PBM:
+                        for (String row : image.imageRGBData) {
+                            while (i > image.imageWidth && i < width) {
+                                tempData.add("255 255 255");
+                            }
+
+                            if (i < image.imageWidth) {
+                                tempData.add(Integer.parseInt(row)*255 + " " + Integer.parseInt(row)*255 + " " + Integer.parseInt(row)*255);
+                            } else if (i == width) {
+                                i = 0;
+                            }
+                            i++;
+                        }
+                        break;
+                }
+            }
+
+
+            for (int j=0; true; j++){
+                this.file = new File("Collages/Collage_" + j + ".ppm");
+                if (!this.file.exists()){
+                    tempCollageID = j;
+                    break;
+                }
+            }
+
+            String tempDataFinal = String.join(" ", tempData);
+
+            Image tempImage = new PPM("P3", null, width + " " + height, "255", tempDataFinal, "Collages/Collage_" + tempCollageID + ".ppm");
+
+            Session.undoRedoChange();
+            ImageEditor.getCurrentSession().getImages().add(tempImage);
+            ImageEditor.setCurrentImageIndex(ImageEditor.getCurrentSession().getImages().size()-1);
+            ImageEditor.setCurrentImage(ImageEditor.getCurrentSession().getImages().get(ImageEditor.getCurrentImageIndex()));
+            ImageEditor.save();
         }
     }
 }

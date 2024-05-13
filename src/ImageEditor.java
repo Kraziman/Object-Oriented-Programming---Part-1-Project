@@ -18,6 +18,10 @@ public class ImageEditor {
             new File("Sessions/").mkdir();
         }
 
+        if (!Files.exists(Path.of("Collages/"))){
+            new File("Collages/").mkdir();
+        }
+
         Scanner scanner = new Scanner(System.in);
 
         do {
@@ -85,11 +89,11 @@ public class ImageEditor {
     }
 
 
-    public void save() {
+    public static void save() {
 
     }
 
-    public void saveas(){
+    public static void saveas(){
 
     }
 
@@ -102,7 +106,11 @@ public class ImageEditor {
         try {
             currentSession = new Session(Integer.parseInt(userCommandParameters[0]));
             currentImage = currentSession.getImages().getFirst();
+            currentImageIndex = 0;
         } catch (InvalidPathException e) {
+            System.out.println(e.getMessage());
+        } catch (Exception e){
+            e.printStackTrace();
             System.out.println(e.getMessage());
         }
     }

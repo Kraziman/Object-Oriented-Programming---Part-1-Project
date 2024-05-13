@@ -212,6 +212,12 @@ public enum Command {
     COLLAGE{
         @Override
         public void handle(){
+            if (ImageEditor.getCurrentSession() == null){
+                System.out.println("You need to create/open a session first!");
+            }
+            else {
+                ImageEditor.getCurrentSession().collage();
+            }
 
         }
 
