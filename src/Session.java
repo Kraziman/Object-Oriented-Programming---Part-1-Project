@@ -114,6 +114,7 @@ public class Session {
         if (!images.isEmpty()){
             int i = 1;
             for (Image image : images) {
+
                 System.out.print(i + ". " + image.fileName);
                 if (image.equals(ImageEditor.getCurrentImage())) {
                     System.out.print("\t\t<-Current Image");
@@ -281,9 +282,10 @@ public class Session {
     }
 
     public void writeSessionData(){
-        StringBuilder temp = new StringBuilder();
+        StringBuilder temp;
             sessionData = new ArrayList<>();
             for (Image image : images){
+                temp = new StringBuilder();
                 for (int i = 0; i< image.imageData.size(); i++){
                     if (i < image.imageDataStart){
                         sessionData.add(image.imageData.get(i) + "\n");
@@ -305,7 +307,7 @@ public class Session {
         }
     }
 
-    public void collage(){
+    public void collage(){ //TODO: FIX THIS BS
         if (images.size() <= 1){
             System.out.println("You need at least 2 images in the session to create a collage!");
         }
@@ -323,50 +325,55 @@ public class Session {
             }
 
             for (Image image : images){
-                int i = 0;
+                System.out.println(image.imageRGBData.size());
+
+                int widthCounter;
                 switch (image.getImageType()){
                     case PPM:
+                        widthCounter = 0;
+
                         for (String row : image.imageRGBData){
-                            while (i > image.imageWidth && i < width){
-                                tempData.add("255 255 255");
+                            if (widthCounter < image.imageWidth){
+                                tempData.add(row);
+                                widthCounter++;
                             }
 
-                            if (i < image.imageWidth){
-                                tempData.add(row);
+                            while (widthCounter >= image.imageWidth && widthCounter < width ){
+                                tempData.add("255 255 255");
+                                widthCounter++;
                             }
-                            else if (i == width){
-                                i = 0;
-                            }
-                            i++;
+                            if (widthCounter == width) widthCounter = 0;
                         }
                         break;
                     case PGM:
+                        widthCounter = 0;
                         for (String row : image.imageRGBData){
-                            while (i > image.imageWidth && i < width){
-                                tempData.add("255 255 255");
+                            if (widthCounter < image.imageWidth){
+                                tempData.add(row + " " + row + " " + row);
+                                widthCounter++;
                             }
 
-                            if (i < image.imageWidth){
-                                tempData.add(row + " " + row + " " + row);
+                            while (widthCounter >= image.imageWidth && widthCounter < width){
+                                tempData.add("255 255 255");
+                                widthCounter++;
                             }
-                            else if (i == width){
-                                i = 0;
-                            }
-                            i++;
+
+
                         }
                         break;
                     case PBM:
+                        widthCounter = 0;
                         for (String row : image.imageRGBData) {
-                            while (i > image.imageWidth && i < width) {
+                            if (widthCounter < image.imageWidth) {
+                                tempData.add(Integer.parseInt(row) * 255 + " " + Integer.parseInt(row) * 255 + " " + Integer.parseInt(row) * 255);
+                                widthCounter++;
+                            }
+                            while (widthCounter >= image.imageWidth && widthCounter < width) {
                                 tempData.add("255 255 255");
+                                widthCounter++;
                             }
 
-                            if (i < image.imageWidth) {
-                                tempData.add(Integer.parseInt(row)*255 + " " + Integer.parseInt(row)*255 + " " + Integer.parseInt(row)*255);
-                            } else if (i == width) {
-                                i = 0;
-                            }
-                            i++;
+                            if (widthCounter == width) widthCounter = 0;
                         }
                         break;
                 }
@@ -381,9 +388,7 @@ public class Session {
                 }
             }
 
-            String tempDataFinal = String.join(" ", tempData);
-
-            Image tempImage = new PPM("P3", null, width + " " + height, "255", tempDataFinal, "Collages/Collage_" + tempCollageID + ".ppm");
+            Image tempImage = new PPM("P3", width + " " + height, "255", tempData, "Collages/Collage_" + tempCollageID + ".ppm");
 
             Session.undoRedoChange();
             ImageEditor.getCurrentSession().getImages().add(tempImage);

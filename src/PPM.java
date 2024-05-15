@@ -20,7 +20,7 @@ public class PPM extends Image{
     }
 
     public PPM(String magicNumber, String comment, String dimensions, String RGBValue, String RGBData, String directory){
-        super(directory, "P1", 1);
+        super(directory, "P6", 255);
         this.fileName = checkImageName(directory);
         this.imageData = new ArrayList<>();
         imageData.add(magicNumber);
@@ -28,6 +28,18 @@ public class PPM extends Image{
         imageData.add(dimensions);
         if (RGBValue != null) imageData.add(RGBValue);
         imageData.add(RGBData);
+
+        readImageData();
+    }
+
+    public PPM(String magicNumber, String dimensions, String RGBValue, ArrayList<String> RGBData, String directory){
+        super(directory, "P6", 255);
+        this.fileName = checkImageName(directory);
+        this.imageData = new ArrayList<>();
+        imageData.add(magicNumber);
+        imageData.add(dimensions);
+        if (RGBValue != null) imageData.add(RGBValue);
+        imageData.addAll(RGBData);
 
         readImageData();
     }
@@ -111,6 +123,8 @@ public class PPM extends Image{
         tempString = imageData.get(imageDataStart-2).split("\\s+");
         imageWidth = Integer.parseInt(tempString[0]);
         imageHeight = Integer.parseInt(tempString[1]);
+
+        System.out.println(imageRGBData.size());
     }
 
     @Override
