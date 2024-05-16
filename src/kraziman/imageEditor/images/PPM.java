@@ -1,7 +1,14 @@
+package kraziman.imageEditor.images;
+
+import kraziman.imageEditor.enums.Direction;
+import kraziman.imageEditor.enums.ImageType;
+import kraziman.imageEditor.session.Session;
+import kraziman.imageEditor.imageEditor.ImageEditor;
+
 import java.io.*;
 import java.util.ArrayList;
 
-public class PPM extends Image{
+public class PPM extends Image {
 
     public PPM(String directory) {
         super(directory, "P6", 255);

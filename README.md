@@ -1,4 +1,4 @@
-# Object-Oriented-Programming-Part-1-Project - Image Editor
+# Object-Oriented-Programming-Part-1-Project - kraziman.imageEditor.images.Image Editor
 University Project for "Object Oriented Programming - Part 1 Project"
 A simple CLI Application for Editing Images.
 

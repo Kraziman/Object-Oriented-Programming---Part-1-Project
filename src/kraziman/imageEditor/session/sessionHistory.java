@@ -1,3 +1,7 @@
+package kraziman.imageEditor.session;
+
+import kraziman.imageEditor.session.Session;
+
 public class sessionHistory {
     private Session session;
     private int currentImageIndex;

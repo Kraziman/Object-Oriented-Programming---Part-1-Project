@@ -1,3 +1,7 @@
+package kraziman.imageEditor.enums;
+
+import kraziman.imageEditor.images.*;
+
 public enum ImageType {
     PPM{
         public Image handle(String directory){

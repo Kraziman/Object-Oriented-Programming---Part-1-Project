@@ -1,3 +1,10 @@
+package kraziman.imageEditor.imageEditor;
+
+import kraziman.imageEditor.enums.Command;
+import kraziman.imageEditor.session.Session;
+import kraziman.imageEditor.images.*;
+import kraziman.imageEditor.exceptions.*;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -93,8 +100,8 @@ public class ImageEditor {
 
 
     public static void save(Image image) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(image.directory))){
-            for (String tempData : image.imageData){
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(image.getDirectory()))){
+            for (String tempData : image.getImageData()){
                 writer.write(tempData);
                 writer.newLine();
             }
@@ -104,8 +111,8 @@ public class ImageEditor {
     }
 
     public static void saveas(Image image, String dir){
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(dir + "/" + image.fileName))){
-            for (String tempData : image.imageData){
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(dir + "/" + image.getFileName()))){
+            for (String tempData : image.getImageData()){
                 writer.write(tempData);
                 writer.newLine();
             }

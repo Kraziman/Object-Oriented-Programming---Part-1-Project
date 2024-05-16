@@ -1,3 +1,10 @@
+package kraziman.imageEditor.session;
+
+import kraziman.imageEditor.enums.ImageType;
+import kraziman.imageEditor.exceptions.InvalidPathException;
+import kraziman.imageEditor.images.*;
+import kraziman.imageEditor.imageEditor.ImageEditor;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -7,8 +14,8 @@ public class Session {
     private final ArrayList<Image> images;
     private ArrayList<String> sessionData;
     private File file;
-    private static ArrayList<sessionHistory> undo; //TODO: Save the last instance of the session before a change and makes the redo arraylist null
-    private static ArrayList<sessionHistory> redo; //TODO: removes the last saved instance in undo, and redoes the last changes
+    private static ArrayList<sessionHistory> undo;
+    private static ArrayList<sessionHistory> redo;
     public Session() {
         images = new ArrayList<>();
         sessionData = new ArrayList<>();
@@ -68,7 +75,6 @@ public class Session {
 
     }
 
-    //TODO: FIX undo,redo and undoRedoChange, cause they don't fucking work SMH MY FUCKING HEAD
     public static void undo(){
         if (undo == null || undo.isEmpty()){
             System.out.println("Nothing to undo!");
@@ -115,7 +121,7 @@ public class Session {
             int i = 1;
             for (Image image : images) {
 
-                System.out.print(i + ". " + image.fileName);
+                System.out.print(i + ". " + image.getFileName());
                 if (image.equals(ImageEditor.getCurrentImage())) {
                     System.out.print("\t\t<-Current Image");
                 }
@@ -141,7 +147,7 @@ public class Session {
                 do {
                     i = 1;
                     for (Image image : images){
-                        System.out.print(i + ". " + image.fileName);
+                        System.out.print(i + ". " + image.getFileName());
                         if (image.equals(ImageEditor.getCurrentImage())){
                             System.out.print("\t\t<-Current Image");
                             currentNumber = i-1;
@@ -242,8 +248,7 @@ public class Session {
                         case "P5":
                             this.images.add(new PGM(magicNumber, comment, dimensions, RGBValue, RGBData, directory));
                             break;
-                        case "P6":
-                        case "P3":
+                        case "P6", "P3":
                             this.images.add(new PPM(magicNumber, comment, dimensions, RGBValue, RGBData, directory));
                             break;
                     }
@@ -286,16 +291,16 @@ public class Session {
             sessionData = new ArrayList<>();
             for (Image image : images){
                 temp = new StringBuilder();
-                for (int i = 0; i< image.imageData.size(); i++){
-                    if (i < image.imageDataStart){
-                        sessionData.add(image.imageData.get(i) + "\n");
+                for (int i = 0; i< image.getImageData().size(); i++){
+                    if (i < image.getImageDataStart()){
+                        sessionData.add(image.getImageData().get(i) + "\n");
                     }
                     else{
-                        temp.append(image.imageData.get(i)).append(" ");
+                        temp.append(image.getImageData().get(i)).append(" ");
                     }
                 }
                 sessionData.add(temp + "\n");
-                sessionData.add(image.directory + "\n");
+                sessionData.add(image.getDirectory() + "\n");
             }
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(this.file, false))){
@@ -318,10 +323,10 @@ public class Session {
             ArrayList<String> tempData = new ArrayList<>();
 
             for (Image image: images){
-                if (image.imageWidth > width){
-                    width = image.imageWidth;
+                if (image.getImageWidth() > width){
+                    width = image.getImageWidth();
                 }
-                height+= image.imageHeight;
+                height+= image.getImageHeight();
             }
 
             for (Image image : images){
@@ -331,13 +336,13 @@ public class Session {
                     case PPM:
                         widthCounter = 0;
 
-                        for (String row : image.imageRGBData){
-                            if (widthCounter < image.imageWidth){
+                        for (String row : image.getImageRGBData()){
+                            if (widthCounter < image.getImageWidth()){
                                 tempData.add(row);
                                 widthCounter++;
                             }
 
-                            while (widthCounter >= image.imageWidth && widthCounter < width ){
+                            while (widthCounter >= image.getImageWidth() && widthCounter < width ){
                                 tempData.add("255 255 255");
                                 widthCounter++;
                             }
@@ -346,13 +351,13 @@ public class Session {
                         break;
                     case PGM:
                         widthCounter = 0;
-                        for (String row : image.imageRGBData){
-                            if (widthCounter < image.imageWidth){
+                        for (String row : image.getImageRGBData()){
+                            if (widthCounter < image.getImageWidth()){
                                 tempData.add(row + " " + row + " " + row);
                                 widthCounter++;
                             }
 
-                            while (widthCounter >= image.imageWidth && widthCounter < width){
+                            while (widthCounter >= image.getImageWidth() && widthCounter < width){
                                 tempData.add("255 255 255");
                                 widthCounter++;
                             }
@@ -362,12 +367,12 @@ public class Session {
                         break;
                     case PBM:
                         widthCounter = 0;
-                        for (String row : image.imageRGBData) {
-                            if (widthCounter < image.imageWidth) {
+                        for (String row : image.getImageRGBData()) {
+                            if (widthCounter < image.getImageWidth()) {
                                 tempData.add(Integer.parseInt(row) * 255 + " " + Integer.parseInt(row) * 255 + " " + Integer.parseInt(row) * 255);
                                 widthCounter++;
                             }
-                            while (widthCounter >= image.imageWidth && widthCounter < width) {
+                            while (widthCounter >= image.getImageWidth() && widthCounter < width) {
                                 tempData.add("255 255 255");
                                 widthCounter++;
                             }
@@ -394,6 +399,10 @@ public class Session {
             ImageEditor.setCurrentImageIndex(ImageEditor.getCurrentSession().getImages().size()-1);
             ImageEditor.setCurrentImage(ImageEditor.getCurrentSession().getImages().get(ImageEditor.getCurrentImageIndex()));
             ImageEditor.save(tempImage);
+
+            if (ImageEditor.getCurrentSession() != null) {
+                ImageEditor.getCurrentSession().writeSessionData();
+            }
         }
     }
 }

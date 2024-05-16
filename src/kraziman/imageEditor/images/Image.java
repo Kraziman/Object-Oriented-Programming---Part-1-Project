@@ -1,3 +1,9 @@
+package kraziman.imageEditor.images;
+
+import kraziman.imageEditor.enums.Direction;
+import kraziman.imageEditor.enums.ImageType;
+import kraziman.imageEditor.exceptions.InvalidPathException;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -32,12 +38,37 @@ public abstract class Image {
         return null;
     }
 
+    public String getFileName() {
+        return fileName;
+    }
+
+    public ArrayList<String> getImageData() {
+        return imageData;
+    }
+
+    public ArrayList<String> getImageRGBData() {
+        return imageRGBData;
+    }
+
+    public String getDirectory() {
+        return directory;
+    }
+
+    public int getImageWidth() {
+        return imageWidth;
+    }
+
+    public int getImageHeight() {
+        return imageHeight;
+    }
+
+    public int getImageDataStart() {
+        return imageDataStart;
+    }
+
     public void readImageData(){
 
     }
-
-    //TODO: Add functionality to change the type of the image(either add it as a general
-    // function of the program or just so it makes collages with different image types easier to make
 
     public void rotate(Direction d){
     }
