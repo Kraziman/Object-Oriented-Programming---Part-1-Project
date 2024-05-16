@@ -7,3 +7,5 @@ public class Main{
 
     }
 }
+
+//TODO: Fix a bug where collages are not written inside the session file.
