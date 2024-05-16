@@ -1,4 +1,7 @@
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Scanner;
@@ -89,12 +92,26 @@ public class ImageEditor {
     }
 
 
-    public static void save() {
-
+    public static void save(Image image) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(image.directory))){
+            for (String tempData : image.imageData){
+                writer.write(tempData);
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public static void saveas(){
-
+    public static void saveas(Image image, String dir){
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(dir + "/" + image.fileName))){
+            for (String tempData : image.imageData){
+                writer.write(tempData);
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void switchSession() {

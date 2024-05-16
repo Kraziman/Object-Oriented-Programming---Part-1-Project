@@ -44,12 +44,12 @@ public class Session {
     }
 
     public static void add(){
-        Session.undoRedoChange();
         ImageType imageType;
         try {
             if (ImageEditor.getCurrentSession() == null){
                 ImageEditor.setCurrentSession(new Session());
             }
+            Session.undoRedoChange();
 
             ImageEditor.setUserCommandParameters(ImageEditor.getInputArray()[1].split("\\s+", 1));
             imageType = ImageType.valueOf(Image.checkImageType(ImageEditor.getUserCommandParameters()[0]));
@@ -307,7 +307,7 @@ public class Session {
         }
     }
 
-    public void collage(){ //TODO: FIX THIS BS
+    public void collage(){
         if (images.size() <= 1){
             System.out.println("You need at least 2 images in the session to create a collage!");
         }
@@ -325,7 +325,6 @@ public class Session {
             }
 
             for (Image image : images){
-                System.out.println(image.imageRGBData.size());
 
                 int widthCounter;
                 switch (image.getImageType()){
@@ -394,7 +393,7 @@ public class Session {
             ImageEditor.getCurrentSession().getImages().add(tempImage);
             ImageEditor.setCurrentImageIndex(ImageEditor.getCurrentSession().getImages().size()-1);
             ImageEditor.setCurrentImage(ImageEditor.getCurrentSession().getImages().get(ImageEditor.getCurrentImageIndex()));
-            ImageEditor.save();
+            ImageEditor.save(tempImage);
         }
     }
 }

@@ -5,7 +5,27 @@ public enum Command {
     SAVEAS{
         @Override
         public void handle(){
-
+            if (ImageEditor.getInputArray().length <= 1) {
+                throw new InvalidCommandFormat("Invalid command format! Try save <directory>");
+            }
+            else if (ImageEditor.getCurrentImage() != null){
+                ImageEditor.setUserCommandParameters(ImageEditor.getInputArray()[1].split("\\s+", 1));
+                ImageEditor.saveas(ImageEditor.getCurrentImage(), ImageEditor.getUserCommandParameters()[0]);
+            }
+            else {
+                if (ImageEditor.getCurrentSession() == null){
+                    System.out.println("You need to create/open a session first!");
+                }
+                else if (ImageEditor.getCurrentSession().getImages().isEmpty()){
+                    System.out.println("There are no images in the current session!");
+                }
+                else if (ImageEditor.getCurrentImage() == null){
+                    System.out.println("You need to select an image before trying that!");
+                }
+                else {
+                    System.out.println("Unexpected error!");
+                }
+            }
         }
 
         @Override
@@ -17,7 +37,7 @@ public enum Command {
     SAVE{
         @Override
         public void handle(){
-
+            ImageEditor.save(ImageEditor.getCurrentImage());
         }
 
         @Override
@@ -137,6 +157,9 @@ public enum Command {
     ADD{
         @Override
         public void handle(){
+            if (ImageEditor.getInputArray().length <= 1) {
+                throw new InvalidCommandFormat("Invalid command format! Try add <directory>");
+            }
             Session.add();
         }
 

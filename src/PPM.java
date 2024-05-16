@@ -123,8 +123,6 @@ public class PPM extends Image{
         tempString = imageData.get(imageDataStart-2).split("\\s+");
         imageWidth = Integer.parseInt(tempString[0]);
         imageHeight = Integer.parseInt(tempString[1]);
-
-        System.out.println(imageRGBData.size());
     }
 
     @Override
