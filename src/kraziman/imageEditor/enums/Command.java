@@ -35,7 +35,7 @@ public enum Command {
 
         @Override
         public String help(){
-            return "Command Help Info";
+            return "saveas <directory> - saves the current image in the given directory.";
         }
 
     },
@@ -63,7 +63,7 @@ public enum Command {
 
         @Override
         public String help(){
-            return "Command Help Info";
+            return "save - saves the current image in its original directory";
         }
 
     },
@@ -91,7 +91,7 @@ public enum Command {
 
         @Override
         public String help(){
-            return "Command Help Info";
+            return "grayscale - adds grayscale filter to the current image.";
         }
 
     },
@@ -119,7 +119,7 @@ public enum Command {
 
         @Override
         public String help(){
-            return "Command Help Info";
+            return "monochrome - adds monochrome filter to the current image.";
         }
 
     },
@@ -147,7 +147,7 @@ public enum Command {
 
         @Override
         public String help(){
-            return "Command Help Info";
+            return "negative - adds negative filter to the current image.";
         }
 
     },
@@ -159,7 +159,7 @@ public enum Command {
 
         @Override
         public String help(){
-            return "Command Help Info";
+            return "undo - undoes the last changes in the current sessions";
         }
 
     },
@@ -171,7 +171,7 @@ public enum Command {
 
         @Override
         public String help(){
-            return "Command Help Info";
+            return "redo - redoes the last changes undoed changes in the current session.";
         }
 
     },
@@ -186,7 +186,7 @@ public enum Command {
 
         @Override
         public String help(){
-            return "Command Help Info";
+            return "ADD <directory> - Adds the image from the given directory in the current session or a new session.";
         }
 
     },
@@ -203,7 +203,7 @@ public enum Command {
 
         @Override
         public String help(){
-            return "Command Help Info";
+            return "sessioninfo - displays information about the current session";
         }
 
     },
@@ -215,7 +215,7 @@ public enum Command {
 
         @Override
         public String help() {
-            return null;
+            return "newsession - create a new empty session.";
         }
     },
     SWITCHSESSION{
@@ -232,7 +232,7 @@ public enum Command {
 
         @Override
         public String help(){
-            return "Command Help Info";
+            return "switchsession <Session ID> - switches to another existing session";
         }
 
     },
@@ -249,7 +249,7 @@ public enum Command {
 
         @Override
         public String help(){
-            return "Command Help Info";
+            return "switchimage - switches to another image in the current session.";
         }
 
     },
@@ -267,7 +267,7 @@ public enum Command {
 
         @Override
         public String help(){
-            return "Command Help Info";
+            return "collage - creates collage from all the images in the current session";
         }
 
     },
@@ -279,7 +279,7 @@ public enum Command {
 
         @Override
         public String help(){
-            return "Command Help Info";
+            return "help or help <command> - Displays information for all commands or gives additional information to how a command works";
         }
 
     },
@@ -291,7 +291,7 @@ public enum Command {
 
         @Override
         public String help(){
-            return "Command Help Info";
+            return "exit - exits the program";
         }
 
     },
@@ -323,10 +323,11 @@ public enum Command {
 
         @Override
         public String help(){
-            return "Command Help Info";
+            return "direction <LEFT or RIGHT> - rotates the current image 90 degrees left or right";
         }
 
     };
+
 
 
 

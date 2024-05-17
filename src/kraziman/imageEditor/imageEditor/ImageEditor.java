@@ -34,7 +34,7 @@ public class ImageEditor {
         Scanner scanner = new Scanner(System.in);
         do {
             try {
-                System.out.print("Enter a command (or type 'exit' to exit): ");
+                System.out.print("\nEnter a command (or type 'exit' to exit): ");
 
                 input = scanner.nextLine();
                 inputArray = input.split("\\s+", 2);
@@ -144,7 +144,23 @@ public class ImageEditor {
     public static void help() {
         if (inputArray.length == 1){
             //TODO: Add a list of all commands
-            System.out.println("List of all commands");
+            System.out.println("\n" +
+                    "    SAVEAS - saves the current image to a given directory\n" +
+                    "    SAVE - saves the current image to its original directory\n" +
+                    "    GRAYSCALE - adds grayscale filter to the current image\n" +
+                    "    MONOCHROME - adds monochrome filter to the current image\n" +
+                    "    NEGATIVE - adds negative filter to the current image\n" +
+                    "    ROTATE - rotates the current image\n" +
+                    "    UNDO - undoes the last changes in the session\n" +
+                    "    REDO - redoes the last undoed chnages in the session\n" +
+                    "    ADD - adds new image to the current session\n" +
+                    "    SESSIONINFO - displays info about the current sesion\n" +
+                    "    NEWSESSION - creates new empty session\n" +
+                    "    SWITCHSESSION - switches to another exisiting session\n" +
+                    "    SWITCHIMAGE - switches to another image in the session\n" +
+                    "    COLLAGE - create collage from all the images in the session\n" +
+                    "    HELP - display information about all commands or a specific command\n" +
+                    "    EXIT - exists the program*/");
         }
         else {
             userCommandParameters = inputArray[1].split("\\s+", 1);
