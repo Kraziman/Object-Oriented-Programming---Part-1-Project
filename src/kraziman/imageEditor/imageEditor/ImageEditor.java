@@ -27,13 +27,11 @@ public class ImageEditor {
         if (!Files.exists(Path.of("Sessions/"))){
             new File("Sessions/").mkdir();
         }
-
         if (!Files.exists(Path.of("Collages/"))){
             new File("Collages/").mkdir();
         }
 
         Scanner scanner = new Scanner(System.in);
-
         do {
             try {
                 System.out.print("Enter a command (or type 'exit' to exit): ");

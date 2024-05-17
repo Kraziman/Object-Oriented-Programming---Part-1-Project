@@ -59,18 +59,24 @@ public class Session {
             Session.undoRedoChange();
 
             ImageEditor.setUserCommandParameters(ImageEditor.getInputArray()[1].split("\\s+", 1));
-            imageType = ImageType.valueOf(Image.checkImageType(ImageEditor.getUserCommandParameters()[0]));
-            ImageEditor.setCurrentImage(imageType.handle(ImageEditor.getUserCommandParameters()[0]));
-            ImageEditor.getCurrentSession().getImages().add(ImageEditor.getCurrentImage());
-            ImageEditor.setCurrentImageIndex(ImageEditor.getCurrentSession().getImages().size()-1);
+            try {
+                imageType = ImageType.valueOf(Image.checkImageType(ImageEditor.getUserCommandParameters()[0]));
+                ImageEditor.setCurrentImage(imageType.handle(ImageEditor.getUserCommandParameters()[0]));
+                ImageEditor.getCurrentSession().getImages().add(ImageEditor.getCurrentImage());
+                ImageEditor.setCurrentImageIndex(ImageEditor.getCurrentSession().getImages().size()-1);
+
+                System.out.println("ADDED!");
+                if (ImageEditor.getCurrentSession() != null) {
+                    ImageEditor.getCurrentSession().writeSessionData();
+                }
+            }
+            catch (IllegalArgumentException e){
+                System.out.println("Unsupported file extension!");
+            }
+
         }
         catch (InvalidPathException e){
             System.out.println(e.getMessage());
-        }
-
-        System.out.println("ADDED!");
-        if (ImageEditor.getCurrentSession() != null) {
-            ImageEditor.getCurrentSession().writeSessionData();
         }
 
     }

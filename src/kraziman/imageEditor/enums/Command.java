@@ -42,7 +42,23 @@ public enum Command {
     SAVE{
         @Override
         public void handle(){
-            ImageEditor.save(ImageEditor.getCurrentImage());
+            if (ImageEditor.getCurrentImage() != null){
+                ImageEditor.save(ImageEditor.getCurrentImage());
+            }
+            else {
+                if (ImageEditor.getCurrentSession() == null){
+                    System.out.println("You need to create/open a session first!");
+                }
+                else if (ImageEditor.getCurrentSession().getImages().isEmpty()){
+                    System.out.println("There are no images in the current session!");
+                }
+                else if (ImageEditor.getCurrentImage() == null){
+                    System.out.println("You need to select an image before trying that!");
+                }
+                else {
+                    System.out.println("Unexpected error!");
+                }
+            }
         }
 
         @Override
