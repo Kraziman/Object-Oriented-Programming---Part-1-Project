@@ -1,10 +1,3 @@
-package kraziman.imageEditor.images;
-
-import kraziman.imageEditor.enums.Direction;
-import kraziman.imageEditor.enums.ImageType;
-import kraziman.imageEditor.session.Session;
-import kraziman.imageEditor.imageEditor.ImageEditor;
-
 import java.io.*;
 import java.util.ArrayList;
 

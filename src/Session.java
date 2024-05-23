@@ -1,10 +1,3 @@
-package kraziman.imageEditor.session;
-
-import kraziman.imageEditor.enums.ImageType;
-import kraziman.imageEditor.exceptions.InvalidPathException;
-import kraziman.imageEditor.images.*;
-import kraziman.imageEditor.imageEditor.ImageEditor;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;

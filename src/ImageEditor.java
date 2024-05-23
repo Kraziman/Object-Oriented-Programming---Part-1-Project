@@ -1,10 +1,3 @@
-package kraziman.imageEditor.imageEditor;
-
-import kraziman.imageEditor.enums.Command;
-import kraziman.imageEditor.session.Session;
-import kraziman.imageEditor.images.*;
-import kraziman.imageEditor.exceptions.*;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;

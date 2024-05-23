@@ -1,19 +1,11 @@
-package kraziman.imageEditor.images;
-
-import kraziman.imageEditor.imageEditor.ImageEditor;
-import kraziman.imageEditor.session.Session;
-import kraziman.imageEditor.enums.Direction;
-import kraziman.imageEditor.enums.ImageType;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
-public class PBM extends Image{
+public class PGM extends Image {
 
-    public PBM(String directory) {
-        super(directory, "P1", 1);
+    public PGM(String directory) {
+        super(directory, "P5", 255);
         this.fileName = checkImageName(directory);
         this.imageData = null;
         try{
@@ -27,17 +19,22 @@ public class PBM extends Image{
         }
     }
 
-    public PBM(String magicNumber, String comment, String dimensions, String RGBValue, String RGBData, String directory){
-            super(directory, "P1", 1);
-            this.fileName = checkImageName(directory);
-            imageData.add(magicNumber);
-            if (comment != null) imageData.add(comment);
-            imageData.add(dimensions);
-            if (RGBValue != null) imageData.add(RGBValue);
-            imageData.add(RGBData);
+    public PGM(String magicNumber, String comment, String dimensions, String RGBValue, String RGBData, String directory){
+        super(directory, "P1", 1);
+        this.fileName = checkImageName(directory);
+        imageData.add(magicNumber);
+        if (comment != null) imageData.add(comment);
+        imageData.add(dimensions);
+        if (RGBValue != null) imageData.add(RGBValue);
+        imageData.add(RGBData);
 
-            readImageData();
-        }
+        readImageData();
+    }
+
+    @Override
+    public ImageType getImageType(){
+        return ImageType.PGM;
+    }
 
     @Override
     public void rotate(Direction d){
@@ -66,7 +63,7 @@ public class PBM extends Image{
                 }
                 break;
         }
-        imageData.set(imageDataStart-1, imageHeight + " " + imageWidth);
+        imageData.set(imageDataStart-2, imageHeight + " " + imageWidth);
         int temp = imageHeight;
         imageHeight = imageWidth;
         imageWidth = temp;
@@ -87,10 +84,10 @@ public class PBM extends Image{
     @Override
     public void readImageData(){
         if (imageData == null) imageData = Image.imageReader(directory);
-        imageDataStart = 2;
+        imageDataStart = 3;
         for (int i = 0; i < imageData.size(); i++){
             if (imageData.get(i).contains("#")){
-                imageDataStart = i+2;
+                imageDataStart = i+3;
             }
         }
         StringBuilder temp = new StringBuilder();
@@ -99,7 +96,9 @@ public class PBM extends Image{
         }
         String[] tempString = String.valueOf(temp).split("\\s+");
 
-        imageRGBData.addAll(Arrays.asList(tempString));
+        for (int i = 0; i < tempString.length; i+=3){
+            imageRGBData.add(tempString[i]);
+        }
 
         ArrayList<String> tempArray = new ArrayList<>();
         for (int i = 0; i < imageDataStart; i++){
@@ -109,7 +108,7 @@ public class PBM extends Image{
         imageData.addAll(tempArray);
         imageData.addAll(imageRGBData);
 
-        tempString = imageData.get(imageDataStart-1).split("\\s+");
+        tempString = imageData.get(imageDataStart-2).split("\\s+");
         imageWidth = Integer.parseInt(tempString[0]);
         imageHeight = Integer.parseInt(tempString[1]);
     }
@@ -117,7 +116,7 @@ public class PBM extends Image{
     @Override
     public void negative(){
         Session.undoRedoChange();
-        imageRGBData.replaceAll(s -> String.valueOf(1 - Integer.parseInt(s)));
+        imageRGBData.replaceAll(s -> String.valueOf(255 - Integer.parseInt(s)));
         for (int i = imageDataStart; i< imageData.size(); i++){
             imageData.set(i, imageRGBData.get(i-imageDataStart));
         }
@@ -133,16 +132,30 @@ public class PBM extends Image{
 
     @Override
     public void grayscale(){
-        System.out.println("Cannot do that with image type PBM!");
+        System.out.println("Image is already in grayscale");
     }
 
     @Override
     public void monochrome(){
-        System.out.println("Image is already monochrome!");
-    }
+        Session.undoRedoChange();
+        for (int i = 0; i < imageRGBData.size(); i++){
+            if (Integer.parseInt(imageRGBData.get(i)) < 128){
+                imageRGBData.set(i, "0");
+            }
+            else{
+                imageRGBData.set(i, String.valueOf(RGBValue));
+            }
+        }
+        for (int i = imageDataStart; i< imageData.size(); i++){
+            imageData.set(i, imageRGBData.get(i-imageDataStart));
+        }
 
-    @Override
-    public ImageType getImageType(){
-        return ImageType.PBM;
+        System.out.print("\tDONE!\n");
+
+        ImageEditor.getCurrentSession().getImages().set(ImageEditor.getCurrentImageIndex(), ImageEditor.getCurrentImage());
+
+        if (ImageEditor.getCurrentSession() != null) {
+            ImageEditor.getCurrentSession().writeSessionData();
+        }
     }
 }

@@ -1,9 +1,3 @@
-package kraziman.imageEditor.images;
-
-import kraziman.imageEditor.enums.Direction;
-import kraziman.imageEditor.enums.ImageType;
-import kraziman.imageEditor.exceptions.InvalidPathException;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;

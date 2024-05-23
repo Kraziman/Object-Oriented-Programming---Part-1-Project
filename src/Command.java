@@ -1,10 +1,3 @@
-package kraziman.imageEditor.enums;
-import kraziman.imageEditor.imageEditor.ImageEditor;
-import kraziman.imageEditor.exceptions.*;
-import kraziman.imageEditor.session.Session;
-
-import java.io.IOException;
-
 public enum Command {
 
     SAVEAS{
