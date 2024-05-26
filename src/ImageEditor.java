@@ -120,7 +120,7 @@ public class ImageEditor {
 
         try {
             currentSession = new Session(Integer.parseInt(userCommandParameters[0]));
-            currentImage = currentSession.getImages().getFirst();
+            currentImage = currentSession.getImages().get(0);
             currentImageIndex = 0;
         } catch (InvalidPathException e) {
             System.out.println(e.getMessage());
