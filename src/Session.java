@@ -79,11 +79,11 @@ public class Session {
             System.out.println("Nothing to undo!");
         }
         else {
-            redo.add(undo.getLast());
-            ImageEditor.setCurrentSession(undo.getLast().getSession());
-            ImageEditor.setCurrentImageIndex(undo.getLast().getCurrentImageIndex());
+            redo.add(undo.get(undo.size() -1));
+            ImageEditor.setCurrentSession(undo.get(undo.size() -1).getSession());
+            ImageEditor.setCurrentImageIndex(undo.get(undo.size() -1).getCurrentImageIndex());
             ImageEditor.setCurrentImage(ImageEditor.getCurrentSession().getImages().get(ImageEditor.getCurrentImageIndex()));
-            undo.removeLast();
+            undo.remove(undo.size() - 1);
             if (ImageEditor.getCurrentSession() != null) {
                 ImageEditor.getCurrentSession().writeSessionData();
             }
@@ -96,11 +96,11 @@ public class Session {
             System.out.println("Nothing to redo!");
         }
         else {
-            undo.add(redo.getLast());
-            ImageEditor.setCurrentSession(redo.getLast().getSession());
-            ImageEditor.setCurrentImageIndex(redo.getLast().getCurrentImageIndex());
+            undo.add(redo.get(redo.size()-1));
+            ImageEditor.setCurrentSession(redo.get(redo.size()-1).getSession());
+            ImageEditor.setCurrentImageIndex(redo.get(redo.size()-1).getCurrentImageIndex());
             ImageEditor.setCurrentImage(ImageEditor.getCurrentSession().getImages().get(ImageEditor.getCurrentImageIndex()));
-            redo.removeLast();
+            redo.remove(redo.size()-1);
             if (ImageEditor.getCurrentSession() != null) {
                 ImageEditor.getCurrentSession().writeSessionData();
             }
