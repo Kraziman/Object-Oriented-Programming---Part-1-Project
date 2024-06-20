@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="63b30989-b746-4733-a54d-5654d88bcc4c" name="Changes" comment="Separated commands into classes">
+      <change beforePath="$PROJECT_DIR$/src/ADD.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kraziman/imageEditor/commands/ADD.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/COLLAGE.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kraziman/imageEditor/commands/COLLAGE.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kraziman/imageEditor/enums/Command.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CommandObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kraziman/imageEditor/interfaces/CommandObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Direction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kraziman/imageEditor/enums/Direction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EXIT.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kraziman/imageEditor/commands/EXIT.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GRAYSCALE.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kraziman/imageEditor/commands/GRAYSCALE.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HELP.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kraziman/imageEditor/commands/HELP.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Image.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kraziman/imageEditor/images/Image.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ImageEditor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kraziman/imageEditor/ie/ImageEditor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ImageType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kraziman/imageEditor/enums/ImageType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/InvalidCommandFormat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kraziman/imageEditor/exceptions/InvalidCommandFormat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/InvalidPathException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kraziman/imageEditor/exceptions/InvalidPathException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MONOCHROME.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kraziman/imageEditor/commands/MONOCHROME.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kraziman/imageEditor/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NEGATIVE.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kraziman/imageEditor/commands/NEGATIVE.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NEWSESSION.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kraziman/imageEditor/commands/NEWSESSION.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PBM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kraziman/imageEditor/images/PBM.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PGM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kraziman/imageEditor/images/PGM.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PPM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kraziman/imageEditor/images/PPM.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/REDO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kraziman/imageEditor/commands/REDO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ROTATE.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kraziman/imageEditor/commands/ROTATE.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SAVE.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kraziman/imageEditor/commands/SAVE.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SAVEAS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kraziman/imageEditor/commands/SAVEAS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SESSIONINFO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kraziman/imageEditor/commands/SESSIONINFO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SWITCHIMAGE.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kraziman/imageEditor/commands/SWITCHIMAGE.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SWITCHSESSION.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kraziman/imageEditor/commands/SWITCHSESSION.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Session.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kraziman/imageEditor/session/Session.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UNDO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kraziman/imageEditor/commands/UNDO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sessionHistory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kraziman/imageEditor/session/sessionHistory.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Kraziman&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Kraziman/Object-Oriented-Programming-Part-1-Project.git&quot;,
+    &quot;accountId&quot;: &quot;86721d86-785d-4b7d-8c93-cba31515a8e8&quot;
+  }
+}</component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2cx9YTIQMQoSGdkx4VoIuN1RnRU" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
+    <option name="sortKey" value="BY_TIME_DESCENDING" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-4f524021" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration>C:\Users\titan\AppData\Roaming\Subversion</configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="63b30989-b746-4733-a54d-5654d88bcc4c" name="Changes" comment="" />
+      <created>1709042410746</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1709042410746</updated>
+      <workItem from="1717099715022" duration="70000" />
+      <workItem from="1717099792453" duration="1505000" />
+    </task>
+    <task id="LOCAL-00001" summary="Added a bunch of classes and enums&#10;- enum Command, MagicNumber&#10;- Image, ImageEditor, MagicNumber, Session">
+      <option name="closed" value="true" />
+      <created>1709074503022</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1709074503022</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Added a new class called CommandHandler which will handle all the commands, Added methods for all the commands in their respective classes.">
+      <option name="closed" value="true" />
+      <created>1709725939112</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1709725939112</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Separated commands into classes">
+      <option name="closed" value="true" />
+      <created>1718895226552</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1718895226552</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added a bunch of classes and enums about the project:&#10;- enum Command, MagicNumber&#10;- Image, ImageEditor, MagicNumber, Session" />
+    <MESSAGE value="Added a bunch of classes and enums&#10;- enum Command, MagicNumber&#10;- Image, ImageEditor, MagicNumber, Session" />
+    <MESSAGE value="Added a new class called CommandHandler which will handle all the commands, Added methods for all the commands in their respective classes." />
+    <MESSAGE value="Separated commands into classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Separated commands into classes" />
+  </component>
+</project>
