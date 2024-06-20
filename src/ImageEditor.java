@@ -33,7 +33,7 @@ public class ImageEditor {
                 inputArray = input.split("\\s+", 2);
 
                 userCommand = Command.valueOf(inputArray[0].toUpperCase());
-                userCommand.handle();
+                userCommand.handle().handle();
 
             } catch (InvalidCommandFormat e) {
                 System.out.println(e.getMessage());
@@ -157,7 +157,7 @@ public class ImageEditor {
         }
         else {
             userCommandParameters = inputArray[1].split("\\s+", 1);
-            System.out.println(Command.valueOf(userCommandParameters[0].toUpperCase()).help());
+            System.out.println(Command.valueOf(userCommandParameters[0].toUpperCase()).handle().help());
         }
     }
 

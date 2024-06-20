@@ -23,6 +23,7 @@ public class Session {
         }
         ImageEditor.setCurrentImageIndex(0);
 
+        System.out.println("New session created successfully!");
     }
 
     public Session(int sessionID) throws InvalidPathException {
